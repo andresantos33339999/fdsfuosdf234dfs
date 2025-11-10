@@ -1,0 +1,254 @@
+/* Detalhes do Movimento */
+
+:root {
+  --accent: #004aad;
+  --muted: #a0a8c0;
+  --bg: #0f1226;
+  --bg-card: #0515486b;
+  --label: #5891da;
+  font-family: "Poppins", sans-serif;
+}
+
+.header-detalhes {
+  background: var(--bg);
+  padding: 20px 20px 16px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.header-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.titulo-secao {
+  flex: 1;
+}
+
+.btn-voltar {
+  svg {
+    path {
+      stroke: #5891da;
+    }
+  }
+}
+
+.titulo-pagina {
+  font-size: 20px;
+  font-weight: 600;
+  color: white;
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+.subtitulo {
+  font-size: 13px;
+  color: #a0a8c0;
+  margin: -6px 0 0 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+.main-detalhes {
+  padding: 20px;
+  padding-bottom: 40px;
+}
+
+/* Card de Categoria */
+.card-categoria {
+  background: linear-gradient(135deg, #fbe700 0%, #f5d700 100%);
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 12px rgba(251, 231, 0, 0.3);
+}
+
+.categoria-icon {
+  width: 64px;
+  height: 64px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.categoria-icon img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.categoria-info {
+  flex: 1;
+}
+
+.categoria-nome {
+  font-size: 22px;
+  font-weight: 600;
+  color: #071029;
+  margin: 0 0 4px 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+.categoria-subtitulo {
+  font-size: 14px;
+  color: rgba(7, 16, 41, 0.7);
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Informações Principais */
+.card-info-principal {
+  background: var(--bg-card);
+  border-radius: 16px;
+  padding: 12px 0;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.card-info-principal .categoria-icon {
+  width: 50px;
+  height: 50px;
+  background: #fbe700;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.card-info-principal .categoria-icon img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+}
+
+.card-info-principal .categoria-info {
+  flex: 1;
+}
+
+.card-info-principal .categoria-nome {
+  font-size: 17px;
+  font-weight: 600;
+  color: white;
+  margin: 0 0 -5px 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+.card-info-principal .categoria-subtitulo {
+  font-size: 14px;
+  color: #a0a8c0;
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+.movimento-descricao {
+  font-size: 14px;
+  font-weight: 500;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  text-align: right;
+}
+
+.movimento-valor-principal {
+  font-size: 14px;
+  font-weight: 400;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Detalhes do Movimento */
+.card-detalhes {
+  background: transparent;
+  border-radius: 16px;
+  padding: 8px 8px;
+  margin-bottom: 16px;
+}
+
+.detalhe-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(160, 168, 192, 0.014);
+}
+
+.detalhe-item:last-child {
+  border-bottom: none;
+}
+
+.detalhe-item.destaque {
+  background: transparent;
+  margin: 0 -20px;
+  padding: 16px 20px;
+  border-bottom: none;
+}
+
+.detalhe-item.destaque + .detalhe-item.destaque {
+  border-bottom: 1px solid rgba(160, 168, 192, 0.014);
+}
+
+.detalhe-label {
+  font-size: 14px;
+  color: #a0a8c0;
+  font-family: 'Poppins', sans-serif;
+  max-width: 60%;
+}
+
+.detalhe-valor {
+  font-size: 14px;
+  font-weight: 500;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  text-align: right;
+}
+
+/* Botões de Ação */
+.acoes-detalhes {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.btn-acao {
+  flex: 1;
+  background: var(--bg-card);
+  border: 1px solid rgba(74, 144, 226, 0.3);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+}
+
+.btn-acao:hover {
+  background: rgba(74, 144, 226, 0.1);
+  border-color: rgba(74, 144, 226, 0.5);
+  transform: translateY(-2px);
+}
+
+.btn-acao svg {
+  color: #4a90e2;
+  width: 28px;
+  height: 28px;
+}
+
+.btn-acao span {
+  font-size: 13px;
+  font-weight: 500;
+  color: white;
+  text-align: center;
+}
+

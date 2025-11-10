@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Caixa Geral de Depósitos — Conta Simulada (€)</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <header class="topo">
+      <div class="frase">Bom dia, João</div>
+
+      <div style="display: flex; align-items: center; gap: 12px">
+        <button id="btnDadosSimulados" style="display: none"></button>
+        <img
+          src="images/IMG_3008.JPG"
+          alt="Foto de perfil"
+          class="foto-perfil"
+        />
+      </div>
+    </header>
+    <main>
+      <div class="card-saldo">
+        <div class="conta-info">
+          <div class="conta-nome">Caixa Jovem Extracto - 0662021643830</div>
+          <div class="saldo-caixa">
+            <div class="saldo-valor">
+              <span class="saldo-icon">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                  <line x1="5" y1="19" x2="19" y2="5"></line>
+                </svg>
+              </span>
+              000,00<span class="saldo-moeda">EUR</span>
+            </div>
+
+            <div class="saldo-img-container">
+              <img
+                src="images/IMG_2958.JPG"
+                alt="Ícone Caixa"
+                class="saldo-img"
+              />
+              <svg
+                class="seta-lado-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M6 9l6 6 6-6"></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="acoes">
+        <div style="display: flex; flex-direction: column; align-items: center">
+          <div class="mbway-btn" id="btnMBWay">
+            <img src="images/IMG_2947.png" />
+          </div>
+          <div class="mbway-label">MB WAY</div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; align-items: center">
+          <div class="mbway-btn" id="btnTransferir">
+            <img src="images/IMG_3009.PNG" />
+          </div>
+          <div class="mbway-label">Transferir</div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; align-items: center">
+          <div class="mbway-btn" id="btnPagamentos">
+            <img src="images/IMG_3001.PNG" alt="Pagamentos" />
+          </div>
+          <div class="mbway-label" style="font-size: 10px">
+            Pagamentos de<br />Serviços
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; align-items: center">
+          <a
+            href="movimentos.html"
+            class="mbway-btn"
+            id="btnSaldosMovimentos"
+            style="text-decoration: none"
+          >
+            <img src="images/Saldos_Movimentos.PNG" alt="Pagamentos" />
+          </a>
+          <div class="mbway-label" style="font-size: 10px; text-align: center">
+            Saldos e<br />movimentos
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; align-items: center">
+          <a
+            href="movimentos.html"
+            class="mbway-btn"
+            id="btnSaldosMovimentos"
+            style="text-decoration: none"
+          >
+            <img src="images/IMG_3175.png" alt="Pagamentos" />
+          </a>
+          <div class="mbway-label" style="font-size: 10px; text-align: center">
+            Consultar<br />IBAN
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; align-items: center">
+          <a
+            href="movimentos.html"
+            class="mbway-btn"
+            id="btnSaldosMovimentos"
+            style="text-decoration: none"
+          >
+            <img src="images/Photoroom_20251106_222505.png" alt="Pagamentos" />
+          </a>
+          <div class="mbway-label" style="font-size: 10px; text-align: center">
+            Cotações
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; align-items: center">
+          <a
+            href="movimentos.html"
+            class="mbway-btn"
+            id="btnSaldosMovimentos"
+            style="text-decoration: none"
+          >
+            <img src="images/Photoroom_20251106_2311051.png" alt="Pagamentos" />
+          </a>
+          <div class="mbway-label" style="font-size: 10px; text-align: center">
+            Movimentos<br />baixo valor
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; align-items: center">
+          <a
+            href="movimentos.html"
+            class="mbway-btn"
+            id="btnSaldosMovimentos"
+            style="text-decoration: none"
+          >
+            <img src="images/Photoroom_20251106_2311105.png" alt="Pagamentos" />
+          </a>
+          <div class="mbway-label" style="font-size: 10px; text-align: center">
+            Personalizar<br />atalhos<br />página inicial
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="tx-header">
+          <h3>Últimos movimentos</h3>
+          <button id="btnVerTudo">Ver tudo</button>
+        </div>
+        <div class="tx-list" id="txList"></div>
+      </div>
+
+      <!-- Galeria de Fotos -->
+      <div class="card">
+        
+        <div class="galeria-container">
+          <div class="galeria-item">
+            <img src="images/Photoroom_20251108_1213713.png" alt="Crédito Habitação Jovem" class="galeria-img" />
+            <div class="galeria-overlay">
+              <span class="galeria-text">Crédito Habitação Jovem</span>
+            </div>
+          </div>
+          <div class="galeria-item">
+            <img src="images/Photoroom_20251108_2213852.png" alt="Combate à Fraude" class="galeria-img" />
+            <div class="galeria-overlay">
+              <span class="galeria-text">Combate à Fraude</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Seção de Despesas do Mês -->
+      <div class="card">
+        <div class="tx-header">
+          <h3 id="tituloMesDespesas">Despesas em Novembro</h3>
+          <button id="btnVerDespesas">Ver tudo</button>
+        </div>
+        <div class="despesas-container" id="despesasContainer">
+          <!-- Será preenchido via JavaScript -->
+        </div>
+      </div>
+    </main>
+
+    <div class="modal" id="modalMB">
+      <div class="box" id="mbMenu">
+        <h2>MB WAY</h2>
+        <div class="menu-opcoes">
+          <button data-opcao="enviar">Enviar dinheiro</button>
+          <button data-opcao="receber">Receber transferência</button>
+          <button>Cartões MB NET</button>
+          <button>Levantar no Multibanco</button>
+          <button>Pagar</button>
+          <button>Pedir dinheiro</button>
+          <button onclick="fecharModal()">Fechar</button>
+        </div>
+      </div>
+
+      <div class="box form-envio" id="formEnvio" style="display: none">
+        <h2>Enviar dinheiro</h2>
+        <label>Enviar para</label>
+        <input
+          type="text"
+          id="destinatario"
+          placeholder="Número ou nome da pessoa"
+        />
+        <label>Valor (€)</label>
+        <input
+          type="number"
+          id="valorEnvio"
+          step="0.01"
+          min="0.01"
+          placeholder="0.00"
+        />
+        <div class="botoes">
+          <button class="enviar" id="btnEnviarDinheiro">Enviar</button>
+          <button class="recuar" onclick="voltarMenu()">Recuar</button>
+        </div>
+      </div>
+
+      <div class="box form-envio" id="formReceber" style="display: none">
+        <h2>Receber transferência</h2>
+        <label>Recebido de</label>
+        <input type="text" id="remetente" placeholder="Nome ou descrição" />
+        <label>Valor (€)</label>
+        <input type="number" id="valorReceber" step="0.01" placeholder="0.00" />
+        <small style="color: var(--muted); display: block; margin-top: 8px">
+          💡 Use valores positivos para receber ou negativos para simular
+          devoluções/estornos
+        </small>
+        <div class="botoes">
+          <button class="enviar" id="btnReceberDinheiro">Confirmar</button>
+          <button class="recuar" onclick="voltarMenu()">Recuar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Transferir -->
+    <div class="modal" id="modalTransferir">
+      <div class="box form-envio">
+        <h2>Transferir</h2>
+        <label>IBAN ou NIB de destino</label>
+        <input
+          type="text"
+          id="ibanDestino"
+          placeholder="PT50 0000 0000 0000 0000 0000 0"
+        />
+        <label>Nome do beneficiário</label>
+        <input type="text" id="nomeBeneficiario" placeholder="Nome completo" />
+        <label>Valor (€)</label>
+        <input
+          type="number"
+          id="valorTransferencia"
+          step="0.01"
+          min="0.01"
+          placeholder="0.00"
+        />
+        <label>Descrição (opcional)</label>
+        <input
+          type="text"
+          id="descricaoTransferencia"
+          placeholder="Motivo da transferência"
+        />
+        <div class="botoes">
+          <button class="enviar" id="btnConfirmarTransferencia">
+            Transferir
+          </button>
+          <button class="recuar" onclick="fecharModalTransferir()">
+            Cancelar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Pagamentos -->
+    <div class="modal" id="modalPagamentos">
+      <div class="box form-envio">
+        <h2>Pagamentos de Serviços</h2>
+        <label>Entidade</label>
+        <input
+          type="text"
+          id="entidade"
+          placeholder="Ex: 11604"
+          maxlength="5"
+        />
+        <label>Referência</label>
+        <input
+          type="text"
+          id="referencia"
+          placeholder="Ex: 123 456 789"
+          maxlength="11"
+        />
+        <label>Valor (€)</label>
+        <input
+          type="number"
+          id="valorPagamento"
+          step="0.01"
+          min="0.01"
+          placeholder="0.00"
+        />
+        <label>Descrição do pagamento</label>
+        <input
+          type="text"
+          id="descricaoPagamento"
+          placeholder="Ex: Conta de água"
+        />
+        <div class="botoes">
+          <button class="enviar" id="btnConfirmarPagamento">Pagar</button>
+          <button class="recuar" onclick="fecharModalPagamentos()">
+            Cancelar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Menu Flutuante Inferior -->
+    <div class="floating-menu">
+      <div class="floating-menu-container">
+        <a href="index.html" class="floating-menu-item">
+          <div class="floating-icon">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+              <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+          </div>
+          <span class="floating-label">Início</span>
+        </a>
+
+        <div class="floating-menu-item floating-center" id="btnFloatingCenter">
+          <div class="floating-icon floating-icon-large">
+            <svg
+              width="32.01884mm"
+              height="32.01884mm"
+              viewBox="0 0 116.01882 102.401"
+              version="1.1"
+              id="svg1"
+            >
+              <g
+                inkscape:label="Layer 1"
+                inkscape:groupmode="layer"
+                id="layer1"
+                transform="translate(-132.55625,-136.525)"
+              >
+                <path
+                  class="st0"
+                  d="M 205.51866,136.525 H 175.4792 c -2.53666,0 -4.93981,1.33507 -6.27488,3.60471 l -15.48701,26.83521 c -1.33503,2.26966 -1.33503,4.93982 0,7.20948 l 23.2305,40.31959 7.34297,-12.68339 c 1.6021,-2.80363 1.6021,-6.27487 0,-9.07854 l -11.74873,-20.4268 c -0.66756,-1.06804 -0.66756,-2.53666 0,-3.60471 l 7.60995,-13.21736 c 0.66758,-1.06803 1.86913,-1.86909 3.07074,-1.86909 h 14.28539 c 1.33507,0 2.53667,0.66754 3.07069,1.86909 l 4.80629,8.27754 c 0.66755,1.0681 1.86915,1.86914 3.07071,1.86914 h 17.75664 l -14.68595,-25.50016 c -0.9346,-2.26964 -3.33774,-3.60471 -6.00785,-3.60471 z"
+                  id="path1"
+                  style="fill: #ffffff; stroke-width: 1.33508"
+                />
+                <path
+                  class="st0"
+                  d="m 232.48733,235.32127 15.08645,-26.03416 c 1.33509,-2.26963 1.33509,-4.93981 0,-7.20947 l -15.48693,-26.83515 c -1.33514,-2.26971 -3.73827,-3.60478 -6.27494,-3.60478 h -46.59445 l 7.34296,12.68333 c 1.60208,2.80366 4.53931,4.53932 7.87701,4.53932 h 23.49749 c 1.33511,0 2.53668,0.66752 3.07069,1.86907 l 7.60998,13.21737 c 0.66752,1.06803 0.66752,2.53666 0,3.60468 l -7.20945,12.41631 c -0.66752,1.06804 -1.86914,1.86909 -3.07068,1.86909 h -9.47911 c -1.33509,0 -2.53666,0.66761 -3.07074,1.86917 l -8.945,15.21995 h 29.37185 c 2.67015,0 5.07334,-1.4686 6.27487,-3.60473 z"
+                  id="path2"
+                  style="fill: #ffffff; stroke-width: 1.33508"
+                />
+                <path
+                  class="st0"
+                  d="m 133.55758,209.28711 14.95294,26.03416 c 1.33507,2.26964 3.73821,3.60473 6.27488,3.60473 h 31.10748 c 2.53665,0 4.93983,-1.33509 6.27488,-3.60473 l 23.23047,-40.31955 h -14.68588 c -3.20422,0 -6.27492,1.7356 -7.87702,4.53927 l -11.74875,20.4268 c -0.66757,1.06804 -1.86912,1.86909 -3.07069,1.86909 h -15.3535 c -1.33504,0 -2.53666,-0.66753 -3.07069,-1.86909 l -7.20942,-12.41631 c -0.66755,-1.06802 -0.66755,-2.53665 0,-3.60468 l 4.8063,-8.27754 c 0.66751,-1.06809 0.66751,-2.53669 0,-3.60472 l -8.94509,-15.48702 -14.68591,25.50012 c -1.3351,2.13615 -1.3351,4.93984 0,7.20947 z"
+                  id="path3"
+                  style="fill: #ffffff; stroke-width: 1.33508"
+                />
+              </g>
+            </svg>
+          </div>
+        </div>
+
+        <a href="movimentos.html" class="floating-menu-item">
+          <div class="floating-icon">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <rect width="7" height="7" x="3" y="3" rx="1"></rect>
+              <rect width="7" height="7" x="14" y="3" rx="1"></rect>
+              <rect width="7" height="7" x="14" y="14" rx="1"></rect>
+              <rect width="7" height="7" x="3" y="14" rx="1"></rect>
+            </svg>
+          </div>
+          <span class="floating-label">Menu</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Supabase Client Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>
