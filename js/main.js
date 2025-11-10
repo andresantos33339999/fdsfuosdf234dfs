@@ -833,6 +833,24 @@ function checkIntroViewed() {
     
     // Quando o vídeo terminar
     if (introVideo) {
+        // Forçar play para iPhone/iOS
+        const forcePlay = () => {
+            introVideo.play().catch(error => {
+                console.warn('⚠️ Autoplay bloqueado:', error);
+                // Se autoplay falhar, tenta de novo após interação
+                document.addEventListener('touchstart', () => {
+                    introVideo.play();
+                }, { once: true });
+            });
+        };
+        
+        // Tenta play imediatamente
+        forcePlay();
+        
+        // Tenta de novo quando o vídeo carregar
+        introVideo.addEventListener('loadeddata', forcePlay);
+        introVideo.addEventListener('canplay', forcePlay);
+        
         introVideo.addEventListener('ended', () => {
             console.log('🎬 Vídeo terminou');
             closeIntro();
