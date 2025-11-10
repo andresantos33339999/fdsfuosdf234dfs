@@ -244,13 +244,26 @@
   color: #4caf50;
 }
 
+.movimento-valor.positivo .movimento-valor-moeda {
+  color: #4caf50;
+}
+
 .movimento-valor.negativo .movimento-valor-numero {
+  color: white;
+}
+
+.movimento-valor.negativo .movimento-valor-moeda {
   color: white;
 }
 
 .movimento-valor-numero {
   font-size: 18px;
   font-weight: 600;
+}
+
+.movimento-valor-moeda {
+  font-size: 12px;
+  font-weight: 400;
 }
 
 .movimento-valor-moeda-verde {
@@ -267,7 +280,7 @@
 
 .movimento-saldo-apos {
   font-size: 13px;
-  color: #a0a8c0;
+  color: white;
 }
 
 /* Loading */

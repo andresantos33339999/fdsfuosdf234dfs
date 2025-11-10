@@ -206,10 +206,10 @@ function renderizarMovimentos() {
                 <div class="movimento-valores">
                     <div class="movimento-valor ${tipo}">
                         <span class="movimento-valor-numero">${valorFmt.valor}</span>
-                        <span class="movimento-valor-moeda-normal">${valorFmt.moeda}</span>
+                        <span class="movimento-valor-moeda">${valorFmt.moeda}</span>
                     </div>
                     <div class="movimento-saldo-apos">
-                        ${saldoFmt.valor}
+                        ${saldoFmt.valor} ${valorFmt.moeda}
                     </div>
                 </div>
             `;
@@ -274,6 +274,19 @@ if (btnFloatingCenter) {
     });
 }
 
+// Marcar que está navegando no site
+sessionStorage.setItem('isNavigating', 'true');
+
 // Inicializar
 console.log('🚀 Página de Movimentos inicializada');
 carregarMovimentos();
+
+// Loading Modal
+window.addEventListener('load', () => {
+    const loadingModal = document.getElementById('loadingModal');
+    if (loadingModal) {
+        setTimeout(() => {
+            loadingModal.classList.add('hidden');
+        }, 1000);
+    }
+});

@@ -185,7 +185,20 @@ function preencherDetalhesLocais(movimento) {
     document.getElementById('saldoDisponivel').textContent = `${saldoFormatado.valor} ${saldoFormatado.moeda}`;
 }
 
+// Marcar que está navegando no site
+sessionStorage.setItem('isNavigating', 'true');
+
 // Inicializar ao carregar a página
 window.addEventListener('DOMContentLoaded', carregarDetalhes);
 
 console.log('✅ Detalhes do movimento prontos');
+
+// Loading Modal
+window.addEventListener('load', () => {
+    const loadingModal = document.getElementById('loadingModal');
+    if (loadingModal) {
+        setTimeout(() => {
+            loadingModal.classList.add('hidden');
+        }, 1000);
+    }
+});

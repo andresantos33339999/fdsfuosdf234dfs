@@ -1,6 +1,10 @@
 // Dados da aplicação
 let saldo = 0;
 let transacoes = [];
+let perfilUsuario = {
+    nome: 'João',
+    avatarUrl: 'images/IMG_3008.JPG'
+};
 
 // Configuração: ativar para usar Supabase
 const USAR_SUPABASE = true;
@@ -793,3 +797,494 @@ async function testarSupabase() {
 
 // Descomente a linha abaixo para testar a conexão ao carregar a página:
 // setTimeout(testarSupabase, 1000);
+
+// Intro Screen
+function checkIntroViewed() {
+    const introScreen = document.getElementById('introScreen');
+    const introVideo = document.getElementById('introVideo');
+    
+    if (!introScreen) return;
+    
+    // Verifica se já está navegando no site (sessionStorage)
+    const isNavigating = sessionStorage.getItem('isNavigating');
+    
+    // Se já está navegando, esconde intro imediatamente
+    if (isNavigating === 'true') {
+        console.log('🔄 Navegando no site, pulando intro...');
+        introScreen.style.display = 'none';
+        return;
+    }
+    
+    // Primeira entrada no site - mostra intro
+    console.log('🎬 Primeira entrada no site! Mostrando intro...');
+    
+    // Função para fechar a intro
+    function closeIntro() {
+        console.log('🎯 Fechando intro...');
+        introScreen.classList.add('fade-out');
+        
+        setTimeout(() => {
+            introScreen.style.display = 'none';
+            // Marca que agora está navegando no site
+            sessionStorage.setItem('isNavigating', 'true');
+            console.log('✅ Intro fechada, navegação ativa');
+        }, 500);
+    }
+    
+    // Quando o vídeo terminar
+    if (introVideo) {
+        introVideo.addEventListener('ended', () => {
+            console.log('🎬 Vídeo terminou');
+            closeIntro();
+        });
+        
+        // Se houver erro ao carregar o vídeo
+        introVideo.addEventListener('error', () => {
+            console.error('❌ Erro ao carregar vídeo da intro');
+            closeIntro();
+        });
+    }
+}
+
+// Inicializar intro
+checkIntroViewed();
+
+// ==================== PERFIL DO USUÁRIO ====================
+
+// Carregar perfil da base de dados
+async function carregarPerfil() {
+    if (!USAR_SUPABASE) return;
+    
+    try {
+        const perfil = await window.supabaseDB.buscarPerfil();
+        
+        if (perfil) {
+            perfilUsuario.nome = perfil.nome || 'João';
+            perfilUsuario.avatarUrl = perfil.avatar_url || 'images/IMG_3008.JPG';
+            
+            // Atualizar interface
+            atualizarPerfilUI();
+            console.log('✅ Perfil carregado:', perfilUsuario);
+        }
+    } catch (error) {
+        console.error('Erro ao carregar perfil:', error);
+    }
+}
+
+// Atualizar interface com dados do perfil
+function atualizarPerfilUI() {
+    // Atualizar nome no topo
+    const fraseElement = document.querySelector('.frase');
+    if (fraseElement) {
+        const periodo = obterPeriodoDoDia();
+        fraseElement.textContent = `${periodo}, ${perfilUsuario.nome}`;
+    }
+    
+    // Atualizar avatar
+    const fotoElement = document.querySelector('.foto-perfil');
+    if (fotoElement) {
+        fotoElement.src = perfilUsuario.avatarUrl;
+    }
+    
+    // Atualizar preview do avatar no modal
+    const avatarPreview = document.getElementById('avatarPreview');
+    if (avatarPreview) {
+        avatarPreview.src = perfilUsuario.avatarUrl;
+    }
+}
+
+// Obter período do dia
+function obterPeriodoDoDia() {
+    const hora = new Date().getHours();
+    if (hora < 12) return 'Bom dia';
+    if (hora < 18) return 'Boa tarde';
+    return 'Boa noite';
+}
+
+// Abrir modal de editar nome
+function abrirModalEditarNome() {
+    const modal = document.getElementById('modalEditarNome');
+    const input = document.getElementById('inputNovoNome');
+    
+    if (modal && input) {
+        input.value = perfilUsuario.nome;
+        modal.style.display = 'flex';
+        setTimeout(() => input.focus(), 100);
+    }
+    
+    // Fechar modal MB WAY
+    fecharModal();
+}
+
+// Abrir modal de editar avatar
+function abrirModalEditarAvatar() {
+    const modal = document.getElementById('modalEditarAvatar');
+    const preview = document.getElementById('avatarPreview');
+    
+    if (modal && preview) {
+        preview.src = perfilUsuario.avatarUrl;
+        modal.style.display = 'flex';
+    }
+    
+    // Fechar modal MB WAY
+    fecharModal();
+}
+
+// Fechar modais de perfil
+function fecharModalPerfil() {
+    document.getElementById('modalEditarNome').style.display = 'none';
+    document.getElementById('modalEditarAvatar').style.display = 'none';
+}
+
+// Salvar novo nome
+async function salvarNome() {
+    const input = document.getElementById('inputNovoNome');
+    const novoNome = input.value.trim();
+    
+    if (!novoNome) {
+        alert('❌ Por favor, digite um nome válido!');
+        return;
+    }
+    
+    if (novoNome.length < 2) {
+        alert('❌ O nome deve ter pelo menos 2 caracteres!');
+        return;
+    }
+    
+    // Mostrar loading
+    const btnSalvar = document.getElementById('btnSalvarNome');
+    const textoOriginal = btnSalvar.textContent;
+    btnSalvar.textContent = '⏳ Salvando...';
+    btnSalvar.disabled = true;
+    
+    try {
+        if (USAR_SUPABASE) {
+            const resultado = await window.supabaseDB.atualizarNome(novoNome);
+            
+            if (resultado) {
+                perfilUsuario.nome = novoNome;
+                atualizarPerfilUI();
+                console.log('✅ Nome atualizado com sucesso!');
+                
+                // Fechar modal
+                fecharModalPerfil();
+                
+                // Mostrar confirmação
+                alert(`✅ Nome atualizado para "${novoNome}"!`);
+            } else {
+                alert('❌ Erro ao atualizar nome. Tente novamente.');
+            }
+        } else {
+            // Modo local
+            perfilUsuario.nome = novoNome;
+            atualizarPerfilUI();
+            fecharModalPerfil();
+            alert(`✅ Nome atualizado para "${novoNome}"!`);
+        }
+    } catch (error) {
+        console.error('Erro ao salvar nome:', error);
+        alert('❌ Erro ao salvar nome. Tente novamente.');
+    } finally {
+        btnSalvar.textContent = textoOriginal;
+        btnSalvar.disabled = false;
+    }
+}
+
+// Preview da imagem selecionada
+function previewImagem(event) {
+    const file = event.target.files[0];
+    
+    if (!file) return;
+    
+    // Validar tipo
+    if (!file.type.startsWith('image/')) {
+        alert('❌ Por favor, selecione uma imagem válida!');
+        return;
+    }
+    
+    // Validar tamanho (5MB)
+    if (file.size > 5 * 1024 * 1024) {
+        alert('❌ A imagem deve ter no máximo 5MB!');
+        return;
+    }
+    
+    // Mostrar preview
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        const preview = document.getElementById('avatarPreview');
+        if (preview) {
+            preview.src = e.target.result;
+        }
+    };
+    reader.readAsDataURL(file);
+}
+
+// Salvar novo avatar
+async function salvarAvatar() {
+    const input = document.getElementById('inputAvatar');
+    const file = input.files[0];
+    
+    if (!file) {
+        alert('❌ Por favor, selecione uma imagem!');
+        return;
+    }
+    
+    // Mostrar loading
+    const btnSalvar = document.getElementById('btnSalvarAvatar');
+    const textoOriginal = btnSalvar.textContent;
+    btnSalvar.textContent = '⏳ Enviando...';
+    btnSalvar.disabled = true;
+    
+    try {
+        if (USAR_SUPABASE) {
+            // Tentar upload da imagem
+            const urlAvatar = await window.supabaseDB.uploadAvatar(file);
+            
+            if (urlAvatar && urlAvatar !== 'LOCAL_BASE64') {
+                // Upload bem-sucedido - Atualizar no banco
+                const resultado = await window.supabaseDB.atualizarAvatar(urlAvatar);
+                
+                if (resultado) {
+                    perfilUsuario.avatarUrl = urlAvatar;
+                    atualizarPerfilUI();
+                    console.log('✅ Avatar salvo no Supabase!');
+                    fecharModalPerfil();
+                    alert('✅ Avatar atualizado com sucesso!');
+                } else {
+                    alert('❌ Erro ao salvar no banco de dados. Tente novamente.');
+                }
+            } else if (urlAvatar === 'LOCAL_BASE64') {
+                // Fallback para base64 (bucket não configurado)
+                console.warn('⚠️ Usando modo local. Configure o bucket "avatars" no Supabase para persistência.');
+                
+                const reader = new FileReader();
+                reader.onload = async (e) => {
+                    const dataUrl = e.target.result;
+                    perfilUsuario.avatarUrl = dataUrl;
+                    
+                    // Tentar salvar data URL no banco (funciona mas não é ideal)
+                    try {
+                        await window.supabaseDB.atualizarAvatar(dataUrl);
+                        console.log('💾 Avatar salvo como base64 no banco');
+                    } catch (err) {
+                        console.warn('⚠️ Não foi possível salvar no banco, usando apenas localmente');
+                    }
+                    
+                    atualizarPerfilUI();
+                    fecharModalPerfil();
+                    alert('✅ Avatar atualizado!\n\n⚠️ Nota: Configure o bucket "avatars" no Supabase para melhor performance.');
+                };
+                reader.readAsDataURL(file);
+            } else {
+                alert('❌ Erro ao fazer upload da imagem. Verifique o console para mais detalhes.');
+            }
+        } else {
+            // Modo local - usar data URL
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                perfilUsuario.avatarUrl = e.target.result;
+                atualizarPerfilUI();
+                fecharModalPerfil();
+                alert('✅ Avatar atualizado!');
+            };
+            reader.readAsDataURL(file);
+        }
+    } catch (error) {
+        console.error('❌ Erro ao salvar avatar:', error);
+        alert('❌ Erro ao salvar avatar. Veja o console para mais detalhes.');
+    } finally {
+        btnSalvar.textContent = textoOriginal;
+        btnSalvar.disabled = false;
+    }
+}
+
+// ==================== GERENCIAMENTO DE DADOS ====================
+
+// Limpar todos os dados
+async function limparTodosDados() {
+    // Confirmação dupla
+    const confirma1 = confirm('🗑️ ATENÇÃO!\n\nIsso vai DELETAR todas as transações e resetar o saldo para 0€.\n\nTem certeza?');
+    
+    if (!confirma1) return;
+    
+    const confirma2 = confirm('⚠️ ÚLTIMA CONFIRMAÇÃO!\n\nEsta ação é IRREVERSÍVEL!\n\nContinuar mesmo assim?');
+    
+    if (!confirma2) return;
+    
+    try {
+        if (USAR_SUPABASE) {
+            // Deletar transações
+            const deletado = await window.supabaseDB.deletarTodasTransacoes();
+            
+            if (!deletado) {
+                alert('❌ Erro ao deletar transações!');
+                return;
+            }
+            
+            // Resetar saldo
+            const resetado = await window.supabaseDB.resetarSaldo();
+            
+            if (!resetado) {
+                alert('❌ Erro ao resetar saldo!');
+                return;
+            }
+            
+            console.log('✅ Todos os dados foram deletados!');
+            alert('✅ Dados deletados com sucesso!\n\n• Transações: 0\n• Saldo: 0,00 EUR');
+            
+            // Atualizar interface
+            await atualizarUI();
+            fecharModal();
+        } else {
+            // Modo local
+            transacoes = [];
+            saldo = 0;
+            localStorage.setItem('transacoes', JSON.stringify(transacoes));
+            localStorage.setItem('saldo', saldo);
+            atualizarUI();
+            fecharModal();
+            alert('✅ Dados deletados!');
+        }
+    } catch (error) {
+        console.error('❌ Erro ao limpar dados:', error);
+        alert('❌ Erro ao limpar dados. Veja o console.');
+    }
+}
+
+// Gerar dados aleatórios
+async function gerarDadosAleatorios() {
+    const confirma = confirm('🎲 Gerar Dados Novos\n\nIsso vai criar 15 transações aleatórias e definir um novo saldo.\n\nContinuar?');
+    
+    if (!confirma) return;
+    
+    try {
+        if (USAR_SUPABASE) {
+            console.log('🎲 Gerando dados aleatórios...');
+            
+            const resultado = await window.supabaseDB.gerarTransacoesAleatorias(15);
+            
+            if (resultado.sucesso) {
+                console.log('✅ Dados gerados com sucesso!');
+                alert(`✅ Dados gerados com sucesso!\n\n• ${resultado.quantidade} transações criadas\n• Novo saldo: ${resultado.saldoFinal.toFixed(2)} EUR`);
+                
+                // Atualizar interface
+                await atualizarUI();
+                fecharModal();
+            } else {
+                alert(`❌ Erro ao gerar dados:\n${resultado.erro}`);
+            }
+        } else {
+            // Modo local - gerar dados simples
+            transacoes = [];
+            const categorias = ['Supermercado', 'Restaurante', 'Combustível', 'Salário', 'Transferência'];
+            saldo = 1000;
+            
+            for (let i = 0; i < 15; i++) {
+                const valor = (Math.random() * 200 - 50).toFixed(2);
+                const categoria = categorias[Math.floor(Math.random() * categorias.length)];
+                
+                transacoes.push({
+                    id: Date.now() + i,
+                    descricao: categoria,
+                    valor: parseFloat(valor),
+                    data: new Date(Date.now() - i * 86400000).toISOString()
+                });
+            }
+            
+            localStorage.setItem('transacoes', JSON.stringify(transacoes));
+            localStorage.setItem('saldo', saldo);
+            atualizarUI();
+            fecharModal();
+            alert('✅ 15 transações geradas!');
+        }
+    } catch (error) {
+        console.error('❌ Erro ao gerar dados:', error);
+        alert('❌ Erro ao gerar dados. Veja o console.');
+    }
+}
+
+// Event Listeners para perfil
+document.addEventListener('DOMContentLoaded', () => {
+    // Botões de editar
+    const btnEditarNome = document.getElementById('btnEditarNome');
+    const btnEditarAvatar = document.getElementById('btnEditarAvatar');
+    
+    if (btnEditarNome) {
+        btnEditarNome.addEventListener('click', abrirModalEditarNome);
+    }
+    
+    if (btnEditarAvatar) {
+        btnEditarAvatar.addEventListener('click', abrirModalEditarAvatar);
+    }
+    
+    // Botões de gerenciamento de dados
+    const btnLimparDados = document.getElementById('btnLimparDados');
+    const btnGerarDados = document.getElementById('btnGerarDados');
+    
+    if (btnLimparDados) {
+        btnLimparDados.addEventListener('click', limparTodosDados);
+    }
+    
+    if (btnGerarDados) {
+        btnGerarDados.addEventListener('click', gerarDadosAleatorios);
+    }
+    
+    // Botões de salvar
+    const btnSalvarNome = document.getElementById('btnSalvarNome');
+    const btnSalvarAvatar = document.getElementById('btnSalvarAvatar');
+    
+    if (btnSalvarNome) {
+        btnSalvarNome.addEventListener('click', salvarNome);
+    }
+    
+    if (btnSalvarAvatar) {
+        btnSalvarAvatar.addEventListener('click', salvarAvatar);
+    }
+    
+    // Input de avatar
+    const inputAvatar = document.getElementById('inputAvatar');
+    if (inputAvatar) {
+        inputAvatar.addEventListener('change', previewImagem);
+    }
+    
+    // Enter no input de nome
+    const inputNovoNome = document.getElementById('inputNovoNome');
+    if (inputNovoNome) {
+        inputNovoNome.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                salvarNome();
+            }
+        });
+    }
+    
+    // Carregar perfil ao iniciar
+    carregarPerfil();
+});
+
+// Marcar que está navegando quando sair da página
+window.addEventListener('beforeunload', () => {
+    // Mantém flag de navegação ativa
+    if (sessionStorage.getItem('isNavigating') !== 'true') {
+        sessionStorage.setItem('isNavigating', 'true');
+    }
+});
+
+// Loading Modal
+window.addEventListener('load', () => {
+    const loadingModal = document.getElementById('loadingModal');
+    if (loadingModal) {
+        // Se a intro está visível, não mostra loading
+        const introScreen = document.getElementById('introScreen');
+        const isNavigating = sessionStorage.getItem('isNavigating');
+        
+        if (isNavigating !== 'true' && introScreen && introScreen.style.display !== 'none') {
+            // Intro está ativa, esconde loading imediatamente
+            loadingModal.style.display = 'none';
+        } else {
+            // Mostra loading normalmente
+            setTimeout(() => {
+                loadingModal.classList.add('hidden');
+            }, 1000);
+        }
+    }
+});

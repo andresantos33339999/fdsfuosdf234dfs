@@ -22,6 +22,21 @@
   </head>
 
   <body>
+    <!-- Intro Screen -->
+    <div class="intro-screen" id="introScreen">
+      <div class="intro-content">
+        <video class="intro-video" id="introVideo" autoplay muted playsinline>
+          <source src="images/ScreenRecording_11-10-2025_22-32-31_1.mp4" type="video/mp4">
+          Seu navegador não suporta vídeo.
+        </video>
+      </div>
+    </div>
+
+    <!-- Loading Modal -->
+    <div class="loading-modal" id="loadingModal">
+      <div class="loading-spinner"></div>
+    </div>
+
     <header class="topo">
       <div class="frase">Bom dia, João</div>
 
@@ -227,6 +242,10 @@
           <button>Levantar no Multibanco</button>
           <button>Pagar</button>
           <button>Pedir dinheiro</button>
+          <button id="btnEditarNome" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">✏️ Editar Nome</button>
+          <button id="btnEditarAvatar" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">📷 Trocar Avatar</button>
+          <button id="btnLimparDados" style="background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);">🗑️ Limpar Todos os Dados</button>
+          <button id="btnGerarDados" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">🎲 Gerar Dados Novos</button>
           <button onclick="fecharModal()">Fechar</button>
         </div>
       </div>
@@ -430,6 +449,46 @@
           </div>
           <span class="floating-label">Menu</span>
         </a>
+      </div>
+    </div>
+
+    <!-- Modal Editar Nome -->
+    <div class="modal" id="modalEditarNome">
+      <div class="box-perfil">
+        <h2>✏️ Editar Nome</h2>
+        <p style="color: var(--muted); margin-bottom: 20px;">Digite o novo nome que aparecerá no topo da página</p>
+        <label>Nome</label>
+        <input type="text" id="inputNovoNome" placeholder="Ex: João Silva" maxlength="50" />
+        <div class="botoes-perfil">
+          <button class="btn-salvar" id="btnSalvarNome">💾 Salvar</button>
+          <button class="btn-cancelar" onclick="fecharModalPerfil()">✖ Cancelar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Editar Avatar -->
+    <div class="modal" id="modalEditarAvatar">
+      <div class="box-perfil">
+        <h2>📷 Trocar Avatar</h2>
+        <p style="color: var(--muted); margin-bottom: 20px;">Selecione uma imagem do seu computador</p>
+        
+        <div class="avatar-preview">
+          <img id="avatarPreview" src="images/IMG_3008.JPG" alt="Preview" />
+        </div>
+        
+        <label class="btn-upload">
+          📁 Escolher Imagem
+          <input type="file" id="inputAvatar" accept="image/*" style="display: none;" />
+        </label>
+        
+        <small style="color: var(--muted); display: block; margin-top: 12px;">
+          Formatos aceitos: JPG, PNG, GIF (máx. 5MB)
+        </small>
+        
+        <div class="botoes-perfil">
+          <button class="btn-salvar" id="btnSalvarAvatar">💾 Salvar Avatar</button>
+          <button class="btn-cancelar" onclick="fecharModalPerfil()">✖ Cancelar</button>
+        </div>
       </div>
     </div>
 
