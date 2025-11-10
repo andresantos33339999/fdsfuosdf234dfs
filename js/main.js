@@ -831,36 +831,24 @@ function checkIntroViewed() {
         }, 500);
     }
     
-    // Quando o vídeo terminar
+    // GIF toca automaticamente, então apenas fecha após 3.5 segundos
     if (introVideo) {
-        // Forçar play para iPhone/iOS
-        const forcePlay = () => {
-            introVideo.play().catch(error => {
-                console.warn('⚠️ Autoplay bloqueado:', error);
-                // Se autoplay falhar, tenta de novo após interação
-                document.addEventListener('touchstart', () => {
-                    introVideo.play();
-                }, { once: true });
-            });
-        };
-        
-        // Tenta play imediatamente
-        forcePlay();
-        
-        // Tenta de novo quando o vídeo carregar
-        introVideo.addEventListener('loadeddata', forcePlay);
-        introVideo.addEventListener('canplay', forcePlay);
-        
-        introVideo.addEventListener('ended', () => {
-            console.log('🎬 Vídeo terminou');
-            closeIntro();
+        // Espera o GIF carregar
+        introVideo.addEventListener('load', () => {
+            console.log('✅ Intro GIF carregado');
         });
         
-        // Se houver erro ao carregar o vídeo
+        // Se houver erro ao carregar
         introVideo.addEventListener('error', () => {
-            console.error('❌ Erro ao carregar vídeo da intro');
+            console.error('❌ Erro ao carregar GIF da intro');
             closeIntro();
         });
+        
+        // Fecha a intro após 3.5 segundos (duração aproximada do GIF)
+        setTimeout(() => {
+            console.log('🎬 Intro completa');
+            closeIntro();
+        }, 2000);
     }
 }
 
