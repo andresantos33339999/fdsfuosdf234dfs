@@ -1,0 +1,741 @@
+/* Foto de perfil */
+.foto-perfil {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    position: relative;
+    top: -5px;
+}
+
+/* Imagem de saldo */
+.saldo-img {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+    border-radius: 4px;
+    position: relative;
+    top: 0px;
+}
+
+/* Container para agrupar a imagem e o símbolo */
+.saldo-img-container {
+    display: flex;
+    align-items: center;
+    margin-left: 149px;
+}
+
+/* Estilo para o símbolo SVG */
+.seta-lado-icon {
+    width: 25px;
+    height: 25px;
+    color: var(--label);
+    margin-left: 5px;
+}
+
+/* Label MB Way */
+.mbway-label {
+    margin-top: 8px;
+    color: #619ccc;
+    font-weight: 400;
+    font-size: 12px;
+    text-align: center;
+}
+
+/* Variáveis CSS */
+:root {
+    --accent: #004aad;
+    --muted: #a0a8c0;
+    --bg: #0f1226;
+    --bg-card: #0515486b;
+    --label: #5891da;
+    font-family: 'Poppins', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: linear-gradient(180deg, #071029 0%, #081227 70%);
+    color: #e6eef8;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Header */
+header.topo {
+    padding: 25px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.frase {
+    font-size: 22px;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    color: white;
+    position: relative;
+    top: -5px;
+    letter-spacing: 1px;
+}
+
+/* Conta e Saldo */
+.conta-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.conta-nome {
+    font-size: 14px;
+    color: var(--muted);
+}
+
+.saldo-caixa {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    position: relative;
+    top: -3px;
+}
+
+.saldo-valor {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    font-size: 21px;
+    font-weight: 600;
+    color: #FFFFFF;
+    position: relative;
+    top: -5px
+}
+
+/* Ícone do saldo */
+.saldo-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--label);
+    width: 24px;
+    height: 24px;
+    margin-right: -4px;
+    position: relative;
+    top: 3px;
+}
+
+.saldo-icon svg {
+    width: 100%;
+    height: 100%;
+    stroke: currentColor;
+}
+
+.saldo-moeda {
+    font-size: 0.65em;
+    font-weight: 400;
+    align-self: flex-end;
+    position: relative;
+    top: -1px;
+    padding-inline-end: 10px;
+}
+
+.saldo-rotulo {
+    font-size: 13px;
+    color: var(--muted);
+}
+
+/* Main */
+main {
+    max-width: 900px;
+    margin: -20px auto 30px;
+    padding: 0 18px;
+}
+
+/* Cards */
+.card {
+    border-radius: 14px;
+    margin-bottom: 20px;
+}
+
+.card-saldo {
+    background: #0515486b;
+    padding: 15px 22px;
+    border-radius: 4px;
+}
+
+.saldo {
+    text-align: center;
+    font-size: 46px;
+    font-weight: 800;
+    color: #4ad0e6;
+}
+
+.small-muted {
+    text-align: center;
+    font-size: 15px;
+    color: var(--muted);
+    margin-bottom: 14px;
+}
+
+/* Ações com scroll horizontal */
+.acoes {
+    text-align: center;
+    margin-top: 45px;
+    display: flex;
+    justify-content: flex-start;
+    gap: 20px;
+    margin-bottom: 20px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+}
+
+.acoes > div {
+    display: inline-block;
+    white-space: normal;
+    flex-shrink: 0;
+}
+
+/* Ocultar barra de scroll */
+.acoes::-webkit-scrollbar {
+    display: none;
+}
+
+.acoes {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.acoes button {
+    background: var(--accent);
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(0, 74, 173, 0.3);
+}
+
+/* Botão MB Way */
+.mbway-btn {
+    background: #031b3e;
+    border: 1px solid #031b3e;
+    border-radius: 5px;
+    width: 65px;
+    height: 65px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.mbway-btn img {
+    width: 57px;
+    height: 57px;
+    object-fit: contain;
+}
+
+/* Transações */
+.tx-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+.tx-header h3 {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+}
+
+.tx-header button {
+    background: none;
+    border: none;
+    color: var(--label);
+    padding: 4px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    transition: color 0.3s;
+}
+
+.tx-header button:hover {
+    color: #3bc0d6;
+}
+
+.tx-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background: #0515486b;
+    padding: 12px;
+}
+
+.tx {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 12px 0;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 8px;
+    margin: 0 -8px;
+    padding: 12px 8px;
+}
+
+.tx:hover {
+    background: rgba(74, 144, 226, 0.08);
+    transform: translateX(4px);
+}
+
+.tx:active {
+    transform: translateX(2px);
+    background: rgba(74, 144, 226, 0.12);
+}
+
+.tx-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.tx-desc {
+    font-size: 15px;
+    font-weight: 500;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+}
+
+.tx-data {
+    font-size: 13px;
+    font-weight: 400;
+    color: #8a9ab8;
+    font-family: 'Poppins', sans-serif;
+}
+
+.tx-valor {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    text-align: right;
+    white-space: nowrap;
+}
+
+/* Valores positivos - verde */
+.tx-valor.pos .tx-valor-numero,
+.tx-valor.pos .tx-valor-moeda {
+    color: #4caf50;
+}
+
+/* Valores negativos - branco */
+.tx-valor.neg .tx-valor-numero,
+.tx-valor.neg .tx-valor-moeda {
+    color: white;
+}
+
+.tx-valor-numero {
+    font-size: 15px;
+    font-weight: 500;
+    font-family: 'Poppins', sans-serif;
+}
+
+.tx-valor-moeda {
+    font-size: 12px;
+    font-weight: 500;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Galeria de Fotos */
+.galeria-container {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding: 4px 0;
+}
+
+.galeria-container::-webkit-scrollbar {
+    display: none;
+}
+
+.galeria-item {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    flex: 0 0 85%;
+    max-width: 85%;
+    aspect-ratio: 16 / 9;
+    border-radius: 12px;
+    transition: transform 0.3s ease;
+    scroll-snap-align: center;
+}
+
+.galeria-item:hover {
+    transform: scale(1.02);
+}
+
+.galeria-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 12px;
+}
+
+.galeria-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    padding: 20px 16px 16px;
+    display: flex;
+    align-items: flex-end;
+    border-radius: 0 0 12px 12px;
+}
+
+.galeria-text {
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Despesas do Mês */
+.despesas-container {
+    background: var(--bg-card);
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.despesa-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+}
+
+.despesa-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+.despesa-icon.amarelo {
+    background: #fbe700;
+}
+
+.despesa-icon.verde {
+    background: #a3ec63;
+}
+
+.despesa-icon.azul {
+    background: #4ad0e6;
+}
+
+.despesa-icon.laranja {
+    background: #ff9e40;
+}
+
+.despesa-icon.roxo {
+    background: #b794f6;
+}
+
+.despesa-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.despesa-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 6px;
+}
+
+.despesa-nome {
+    font-size: 15px;
+    font-weight: 500;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+}
+
+.despesa-valores {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+}
+
+.despesa-percentagem {
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+}
+
+.despesa-valor {
+    font-size: 14px;
+    font-weight: 500;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+}
+
+.despesa-valor-moeda {
+    font-size: 11px;
+    font-weight: 400;
+    color: #8a9ab8;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Progress Bar */
+.progress-bar-container {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    border-radius: 10px;
+    transition: width 0.5s ease;
+}
+
+.progress-bar-fill.amarelo {
+    background: #fbe700;
+}
+
+.progress-bar-fill.verde {
+    background: #a3ec63;
+}
+
+.progress-bar-fill.azul {
+    background: #4ad0e6;
+}
+
+.progress-bar-fill.laranja {
+    background: #ff9e40;
+}
+
+.progress-bar-fill.roxo {
+    background: #b794f6;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    font-size: 13px;
+    color: var(--muted);
+    margin: 40px 0 20px;
+}
+
+/* Modal */
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.65);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal .box {
+    background: linear-gradient(180deg, #071029, #0a1532);
+    padding: 24px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 400px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.modal h2 {
+    text-align: center;
+    margin-top: 0;
+}
+
+.menu-opcoes button {
+    width: 100%;
+    padding: 10px;
+    margin: 6px 0;
+    border: none;
+    border-radius: 8px;
+    background: var(--accent);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.form-envio label {
+    display: block;
+    margin-top: 10px;
+    font-size: 14px;
+    color: var(--label);
+}
+
+.form-envio input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    margin-top: 6px;
+}
+
+.form-envio .botoes {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 18px;
+}
+
+.form-envio .botoes button {
+    flex: 1;
+    margin: 0 4px;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.enviar {
+    background: #4ad0e6;
+    color: #071029;
+}
+
+.recuar {
+    background: #555;
+    color: white;
+}
+
+/* Menu Flutuante Inferior */
+.floating-menu {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    padding: 0 20px;
+}
+
+.floating-menu-container {
+  background: linear-gradient(135deg, #4a90e2 0%, #5ba3f5 100%);
+  border-radius: 50px;
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  box-shadow: 0 8px 32px rgba(74, 144, 226, 0.4), 0 2px 8px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  opacity: 0.93;
+  border: 4px solid #317ed3;
+}
+
+/* Menu Flutuante Inferior */
+.floating-menu {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  padding: 0 20px;
+}
+
+.floating-menu-container {
+  background: #2469be;
+  border-radius: 50px;
+  padding: 0px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  box-shadow: 0 8px 32px rgba(74, 144, 226, 0.4), 0 2px 8px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+.floating-menu-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+  position: relative;
+}
+
+.floating-menu-item:hover {
+  transform: translateY(-2px);
+}
+
+.floating-icon {
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.floating-icon-large {
+  width: 64px;
+  height: 64px;
+  background: #2469be;
+  border-radius: 50%;
+  border: 3px solid white;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  color: #2469be;
+  margin-top: -8px;
+  margin-bottom: -7px;
+
+  svg {
+    width: 32px;
+    height: 32px;
+    path {
+      fill: white;
+      stroke: white;
+      stroke-width: 2px;
+    }
+  }
+}
+
+.floating-menu-item.floating-center:hover .floating-icon-large {
+  background: white;
+  transform: scale(5);
+}
+
+.floating-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: white;
+  font-family: "Poppins", sans-serif;
+  white-space: nowrap;
+}

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Saldos e Movimentos - Caixa Geral de Depósitos</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/movimentos.css" />
+  </head>
+
+  <body>
+    <header class="header-movimentos">
+      <div class="header-content">
+        <a href="index.html" class="btn-voltar">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M19 12H5M12 19l-7-7 7-7" />
+          </svg>
+        </a>
+        <h1 class="titulo-pagina">Saldos e movimentos</h1>
+        <button class="btn-pesquisa">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.35-4.35"></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="main-movimentos">
+      <!-- Card do Saldo -->
+      <div class="card card-saldo-movimentos">
+        <div class="conta-titulo">CaixaJovem Extracto (2940)</div>
+        <div class="saldo-principal">
+          <div class="saldo-valor-grande" id="saldoValor">120,00 EUR</div>
+          <button class="btn-toggle-saldo" id="btnToggleSaldo">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="icone-olho"
+            >
+              <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="icone-olho-cortado"
+              style="display: none"
+            >
+              <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+              <line x1="2" y1="2" x2="22" y2="22"></line>
+            </svg>
+          </button>
+        </div>
+        <button class="btn-ver-detalhes">Ver detalhes</button>
+      </div>
+
+      <!-- Cabeçalho dos Movimentos -->
+      <div class="movimentos-header">
+        <h2>Movimentos</h2>
+        <a href="#" class="link-vida-financeira">
+          Ver Vida Financeira
+         <img
+          src="images/Photoroom_20251108_223420704.png"
+          alt="Vida Financeira"
+          style="width: 24px; height: 24px;"
+          />
+        </a>
+      </div>
+
+      <!-- Lista de Movimentos -->
+      <div class="movimentos-lista" id="movimentosLista">
+        <!-- Será preenchido via JavaScript -->
+        <div class="loading">
+          <div class="spinner"></div>
+          <p>Carregando movimentos...</p>
+        </div>
+      </div>
+    </main>
+
+    <!-- Menu Flutuante Inferior -->
+    <div class="floating-menu">
+      <div class="floating-menu-container">
+        <a href="index.html" class="floating-menu-item">
+          <div class="floating-icon">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+              <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+          </div>
+          <span class="floating-label">Início</span>
+        </a>
+
+        <div class="floating-menu-item floating-center" id="btnFloatingCenter">
+          <div class="floating-icon floating-icon-large">
+            <svg
+              width="32.01884mm"
+              height="32.01884mm"
+              viewBox="0 0 116.01882 102.401"
+              version="1.1"
+              id="svg1"
+            >
+              <g
+                inkscape:label="Layer 1"
+                inkscape:groupmode="layer"
+                id="layer1"
+                transform="translate(-132.55625,-136.525)"
+              >
+                <path
+                  class="st0"
+                  d="M 205.51866,136.525 H 175.4792 c -2.53666,0 -4.93981,1.33507 -6.27488,3.60471 l -15.48701,26.83521 c -1.33503,2.26966 -1.33503,4.93982 0,7.20948 l 23.2305,40.31959 7.34297,-12.68339 c 1.6021,-2.80363 1.6021,-6.27487 0,-9.07854 l -11.74873,-20.4268 c -0.66756,-1.06804 -0.66756,-2.53666 0,-3.60471 l 7.60995,-13.21736 c 0.66758,-1.06803 1.86913,-1.86909 3.07074,-1.86909 h 14.28539 c 1.33507,0 2.53667,0.66754 3.07069,1.86909 l 4.80629,8.27754 c 0.66755,1.0681 1.86915,1.86914 3.07071,1.86914 h 17.75664 l -14.68595,-25.50016 c -0.9346,-2.26964 -3.33774,-3.60471 -6.00785,-3.60471 z"
+                  id="path1"
+                  style="fill: #ffffff; stroke-width: 1.33508"
+                />
+                <path
+                  class="st0"
+                  d="m 232.48733,235.32127 15.08645,-26.03416 c 1.33509,-2.26963 1.33509,-4.93981 0,-7.20947 l -15.48693,-26.83515 c -1.33514,-2.26971 -3.73827,-3.60478 -6.27494,-3.60478 h -46.59445 l 7.34296,12.68333 c 1.60208,2.80366 4.53931,4.53932 7.87701,4.53932 h 23.49749 c 1.33511,0 2.53668,0.66752 3.07069,1.86907 l 7.60998,13.21737 c 0.66752,1.06803 0.66752,2.53666 0,3.60468 l -7.20945,12.41631 c -0.66752,1.06804 -1.86914,1.86909 -3.07068,1.86909 h -9.47911 c -1.33509,0 -2.53666,0.66761 -3.07074,1.86917 l -8.945,15.21995 h 29.37185 c 2.67015,0 5.07334,-1.4686 6.27487,-3.60473 z"
+                  id="path2"
+                  style="fill: #ffffff; stroke-width: 1.33508"
+                />
+                <path
+                  class="st0"
+                  d="m 133.55758,209.28711 14.95294,26.03416 c 1.33507,2.26964 3.73821,3.60473 6.27488,3.60473 h 31.10748 c 2.53665,0 4.93983,-1.33509 6.27488,-3.60473 l 23.23047,-40.31955 h -14.68588 c -3.20422,0 -6.27492,1.7356 -7.87702,4.53927 l -11.74875,20.4268 c -0.66757,1.06804 -1.86912,1.86909 -3.07069,1.86909 h -15.3535 c -1.33504,0 -2.53666,-0.66753 -3.07069,-1.86909 l -7.20942,-12.41631 c -0.66755,-1.06802 -0.66755,-2.53665 0,-3.60468 l 4.8063,-8.27754 c 0.66751,-1.06809 0.66751,-2.53669 0,-3.60472 l -8.94509,-15.48702 -14.68591,25.50012 c -1.3351,2.13615 -1.3351,4.93984 0,7.20947 z"
+                  id="path3"
+                  style="fill: #ffffff; stroke-width: 1.33508"
+                />
+              </g>
+            </svg>
+          </div>
+        </div>
+
+        <a href="movimentos.html" class="floating-menu-item">
+          <div class="floating-icon">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <rect width="7" height="7" x="3" y="3" rx="1"></rect>
+              <rect width="7" height="7" x="14" y="3" rx="1"></rect>
+              <rect width="7" height="7" x="14" y="14" rx="1"></rect>
+              <rect width="7" height="7" x="3" y="14" rx="1"></rect>
+            </svg>
+          </div>
+          <span class="floating-label">Menu</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Supabase Client Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/movimentos.js"></script>
+  </body>
+</html>

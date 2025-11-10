@@ -1,0 +1,422 @@
+/* Página de Movimentos */
+
+:root {
+  --accent: #004aad;
+  --muted: #a0a8c0;
+  --bg: #0f1226;
+  --bg-card: #0515486b;
+  --label: #5891da;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Header */
+.header-movimentos {
+  background: linear-gradient(180deg, #071029 0%, #081227 100%);
+  padding: 20px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.btn-voltar,
+.btn-pesquisa {
+  background: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.3s;
+}
+
+.btn-voltar:hover,
+.btn-pesquisa:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.titulo-pagina {
+  color: white;
+  font-size: 19px;
+  font-weight: 600;
+  margin: 0;
+  margin-right: auto;
+}
+
+/* Main */
+.main-movimentos {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px 18px;
+  min-height: calc(100vh - 80px);
+}
+
+/* Card do Saldo */
+.card-saldo-movimentos {
+  background-color: var(--bg-card);
+  padding: 24px;
+  margin-bottom: 9px;
+}
+
+.conta-titulo {
+  font-size: 16px;
+  color: #a0a8c0;
+}
+
+.saldo-principal {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.saldo-valor-grande {
+  font-size: 22px;
+  font-weight: 600;
+  color: white;
+}
+
+.saldo-valor-grande.oculto {
+  font-size: 24px;
+  letter-spacing: 6px;
+}
+
+.btn-toggle-saldo {
+  background: transparent;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: white;
+  transition: background 0.3s;
+}
+
+.btn-ver-detalhes {
+  background: transparent;
+  border: none;
+  color: var(--label);
+  font-size: 14px;
+  font-weight: 500;
+  font-family: "Poppins", sans-serif;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+/* Header dos Movimentos */
+.movimentos-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.movimentos-header h2 {
+  font-size: 17px;
+  font-weight: 500;
+  color: white;
+  margin: 0;
+}
+
+.link-vida-financeira {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--label);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.link-vida-financeira:hover {
+  color: #3bc0d6;
+}
+
+/* Lista de Movimentos */
+.movimentos-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* Grupo de Data */
+.data-grupo {
+  margin-bottom: 20px;
+}
+
+.data-label {
+  font-size: 13px;
+  color: #a0a8c0;
+  font-weight: 600;
+  padding: 12px 0 8px 0;
+  margin-bottom: 8px;
+}
+
+/* Item de Movimento */
+.movimento-item {
+  border-radius: 12px;
+  padding: 16px 8px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: background 0.3s;
+  cursor: pointer;
+}
+
+.movimento-item:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* Ícone do Movimento */
+.movimento-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.movimento-icon.positivo {
+  background: #4aaf50;
+}
+
+.movimento-icon.negativo {
+  background: #fbe700;
+}
+
+.movimento-icon.neutro {
+  background: linear-gradient(135deg, #4a90e2, #357abd);
+}
+
+/* Info do Movimento */
+.movimento-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.movimento-descricao {
+  font-size: 16px;
+  font-weight: 400;
+  color: white;
+  margin-bottom: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.movimento-data-hora {
+  font-size: 13px;
+  color: #a0a8c0;
+}
+
+/* Valores do Movimento */
+.movimento-valores {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.movimento-valor {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  margin-bottom: 4px;
+  justify-content: flex-end;
+}
+
+.movimento-valor.positivo .movimento-valor-numero {
+  color: #4caf50;
+}
+
+.movimento-valor.negativo .movimento-valor-numero {
+  color: white;
+}
+
+.movimento-valor-numero {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.movimento-valor-moeda-verde {
+  font-size: 12px;
+  font-weight: 400;
+  color: #4caf50;
+}
+
+.movimento-valor-moeda-normal {
+  font-size: 12px;
+  font-weight: 400;
+  color: #a0a8c0;
+}
+
+.movimento-saldo-apos {
+  font-size: 13px;
+  color: #a0a8c0;
+}
+
+/* Loading */
+.loading {
+  text-align: center;
+  padding: 60px 20px;
+  color: #a0a8c0;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  margin: 0 auto 20px;
+  border: 4px solid rgba(74, 144, 226, 0.2);
+  border-top-color: #4a90e2;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Mensagem vazia */
+.mensagem-vazia {
+  text-align: center;
+  padding: 60px 20px;
+  color: #a0a8c0;
+}
+
+.mensagem-vazia svg {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 20px;
+  opacity: 0.3;
+}
+
+.mensagem-vazia h3 {
+  font-size: 20px;
+  color: white;
+  margin-bottom: 10px;
+}
+
+.mensagem-vazia p {
+  font-size: 14px;
+}
+
+/* Menu Flutuante Inferior */
+.floating-menu {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  padding: 0 20px;
+}
+
+.floating-menu-container {
+  background: linear-gradient(135deg, #4a90e2 0%, #5ba3f5 100%);
+  border-radius: 50px;
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  box-shadow: 0 8px 32px rgba(74, 144, 226, 0.4), 0 2px 8px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  opacity: 0.93;
+  border: 4px solid #317ed3;
+}
+
+/* Menu Flutuante Inferior */
+.floating-menu {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  padding: 0 20px;
+}
+
+.floating-menu-container {
+  background: #2469be;
+  border-radius: 50px;
+  padding: 0px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  box-shadow: 0 8px 32px rgba(74, 144, 226, 0.4), 0 2px 8px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+.floating-menu-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+  position: relative;
+}
+
+.floating-menu-item:hover {
+  transform: translateY(-2px);
+}
+
+.floating-icon {
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.floating-icon-large {
+  width: 64px;
+  height: 64px;
+  background: #2469be;
+  border-radius: 50%;
+  border: 3px solid white;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  color: #2469be;
+  margin-top: -8px;
+  margin-bottom: -7px;
+
+  svg {
+    width: 32px;
+    height: 32px;
+    path {
+      fill: white;
+      stroke: white;
+      stroke-width: 2px;
+    }
+  }
+}
+
+.floating-menu-item.floating-center:hover .floating-icon-large {
+  background: white;
+  transform: scale(5);
+}
+
+.floating-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: white;
+  font-family: "Poppins", sans-serif;
+  white-space: nowrap;
+}
