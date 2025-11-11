@@ -446,29 +446,45 @@ async function uploadAvatar(file) {
 async function deletarTodasTransacoes() {
   try {
     console.log("🗑️ Deletando todas as transações...");
+    console.log("   Passo 1: Deletando detalhes...");
 
     // Deletar detalhes primeiro (foreign key)
-    const { error: errorDetalhes } = await supabaseClient
+    const { error: errorDetalhes, count: countDetalhes } = await supabaseClient
       .from("detalhes_transacoes")
       .delete()
       .neq("id", 0); // Deletar todos (workaround para delete all)
 
     if (errorDetalhes) {
-      console.error("Erro ao deletar detalhes:", errorDetalhes);
+      console.error("❌ Erro ao deletar detalhes:", errorDetalhes);
+      console.error("   Código:", errorDetalhes.code);
+      console.error("   Mensagem:", errorDetalhes.message);
+    } else {
+      console.log(`✅ Detalhes deletados!`);
     }
 
+    console.log("   Passo 2: Deletando transações...");
+
     // Deletar transações
-    const { error: errorTransacoes } = await supabaseClient
+    const { error: errorTransacoes, count: countTransacoes } = await supabaseClient
       .from("transacoes")
       .delete()
       .neq("id", 0); // Deletar todos
 
-    if (errorTransacoes) throw errorTransacoes;
+    if (errorTransacoes) {
+      console.error("❌ Erro ao deletar transações:", errorTransacoes);
+      console.error("   Código:", errorTransacoes.code);
+      console.error("   Mensagem:", errorTransacoes.message);
+      throw errorTransacoes;
+    }
 
-    console.log("✅ Todas as transações deletadas!");
+    console.log(`✅ Transações deletadas!`);
+    console.log("✅ TODAS AS TRANSAÇÕES DELETADAS COM SUCESSO!");
     return true;
   } catch (error) {
-    console.error("❌ Erro ao deletar transações:", error);
+    console.error("❌ ERRO CRÍTICO ao deletar transações:", error);
+    console.error("   Tipo:", error.constructor.name);
+    console.error("   Mensagem:", error.message);
+    console.error("   Stack:", error.stack);
     return false;
   }
 }
@@ -476,16 +492,30 @@ async function deletarTodasTransacoes() {
 // Resetar saldo para 0
 async function resetarSaldo() {
   try {
+    console.log("💰 Resetando saldo para 0...");
+    
+    // O saldo está na tabela usuarios, não na tabela saldo
     const { data, error } = await supabaseClient
-      .from("saldo")
-      .update({ valor: 0 })
+      .from("usuarios")
+      .update({ saldo: 0 })
       .eq("id", 1);
 
-    if (error) throw error;
+    if (error) {
+      console.error("❌ Erro ao resetar saldo:", error);
+      console.error("   Código:", error.code);
+      console.error("   Mensagem:", error.message);
+      throw error;
+    }
+    
     console.log("✅ Saldo resetado para 0!");
+    console.log("   Tabela: usuarios");
+    console.log("   Novo saldo: 0€");
     return true;
   } catch (error) {
-    console.error("❌ Erro ao resetar saldo:", error);
+    console.error("❌ ERRO CRÍTICO ao resetar saldo:", error);
+    console.error("   Tipo:", error.constructor.name);
+    console.error("   Mensagem:", error.message);
+    console.error("   Stack:", error.stack);
     return false;
   }
 }

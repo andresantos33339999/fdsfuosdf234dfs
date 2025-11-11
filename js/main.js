@@ -1221,52 +1221,71 @@ async function salvarAvatar() {
 
 // Limpar todos os dados
 async function limparTodosDados() {
+    console.log('🗑️ Solicitação de limpeza de dados...');
+    
     // Confirmação dupla
     const confirma1 = confirm('🗑️ ATENÇÃO!\n\nIsso vai DELETAR todas as transações e resetar o saldo para 0€.\n\nTem certeza?');
     
-    if (!confirma1) return;
+    if (!confirma1) {
+        console.log('❌ Limpeza cancelada (1ª confirmação)');
+        return;
+    }
     
     const confirma2 = confirm('⚠️ ÚLTIMA CONFIRMAÇÃO!\n\nEsta ação é IRREVERSÍVEL!\n\nContinuar mesmo assim?');
     
-    if (!confirma2) return;
+    if (!confirma2) {
+        console.log('❌ Limpeza cancelada (2ª confirmação)');
+        return;
+    }
     
     try {
-        if (USAR_SUPABASE) {
-            // Deletar transações
+        if (USAR_SUPABASE && typeof window.supabaseDB !== 'undefined') {
+            console.log('🗑️ Iniciando limpeza no Supabase...');
+            
+            // PASSO 1: Deletar transações
+            console.log('📝 Deletando transações...');
             const deletado = await window.supabaseDB.deletarTodasTransacoes();
             
             if (!deletado) {
-                alert('❌ Erro ao deletar transações!');
-                return;
+                throw new Error('Falha ao deletar transações');
             }
+            console.log('✅ Transações deletadas!');
             
-            // Resetar saldo
+            // PASSO 2: Resetar saldo
+            console.log('💰 Resetando saldo...');
             const resetado = await window.supabaseDB.resetarSaldo();
             
             if (!resetado) {
-                alert('❌ Erro ao resetar saldo!');
-                return;
+                throw new Error('Falha ao resetar saldo');
             }
+            console.log('✅ Saldo resetado!');
             
-            console.log('✅ Todos os dados foram deletados!');
-            alert('✅ Dados deletados com sucesso!\n\n• Transações: 0\n• Saldo: 0,00 EUR');
+            console.log('\n✅ TODOS OS DADOS DELETADOS COM SUCESSO!');
+            alert('✅ Dados deletados com sucesso!\n\n• Transações: 0\n• Detalhes: 0\n• Saldo: 0,00 EUR\n\nAtualizando interface...');
             
-            // Atualizar interface
+            // PASSO 3: Atualizar interface
+            console.log('🔄 Atualizando interface...');
             await atualizarUI();
+            console.log('✅ Interface atualizada!');
+            
             fecharModal();
         } else {
+            console.log('💾 Limpeza no modo local...');
             // Modo local
             transacoes = [];
             saldo = 0;
             localStorage.setItem('transacoes', JSON.stringify(transacoes));
             localStorage.setItem('saldo', saldo);
-            atualizarUI();
+            await atualizarUI();
             fecharModal();
             alert('✅ Dados deletados!');
         }
     } catch (error) {
-        console.error('❌ Erro ao limpar dados:', error);
-        alert('❌ Erro ao limpar dados. Veja o console.');
+        console.error('❌ ERRO CRÍTICO ao limpar dados:');
+        console.error('   Tipo:', error.constructor.name);
+        console.error('   Mensagem:', error.message);
+        console.error('   Stack:', error.stack);
+        alert(`❌ Erro ao limpar dados!\n\n${error.message}\n\nVeja o console (F12) para mais detalhes.`);
     }
 }
 
