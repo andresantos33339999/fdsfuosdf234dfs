@@ -252,17 +252,3 @@
   text-align: center;
 }
 
-/* Botão de apagar (vermelho) */
-.btn-acao.btn-apagar {
-  border-color: rgba(239, 68, 68, 0.3);
-}
-
-.btn-acao.btn-apagar:hover {
-  background: rgba(239, 68, 68, 0.1);
-  border-color: rgba(239, 68, 68, 0.5);
-}
-
-.btn-acao.btn-apagar svg {
-  color: #ef4444;
-}
-
