@@ -333,7 +333,7 @@ function atualizarSaldoUI() {
         document.getElementById("btnEnviarDinheiro").addEventListener("click", async () => {
             const dest = document.getElementById("destinatario").value.trim();
             const val = parseFloat(document.getElementById("valorEnvio").value);
-            const contaDestino = document.getElementById("contaDestino").value.trim();
+            let contaDestino = document.getElementById("contaDestino").value.trim();
             const categoria = document.getElementById("categoriaEnvio").value;
             const notas = document.getElementById("notasEnvio").value.trim();
             
@@ -344,6 +344,11 @@ function atualizarSaldoUI() {
             
             if (val > saldo) {
                 return alert("❌ Saldo insuficiente.");
+            }
+            
+            // Se conta destino estiver vazia, gerar número aleatório de 13 dígitos
+            if (!contaDestino) {
+                contaDestino = gerarNumeroConta(13);
             }
             
             const descricao = ` ${dest}`;
@@ -423,13 +428,18 @@ function atualizarSaldoUI() {
         document.getElementById("btnReceberDinheiro").addEventListener("click", async () => {
             const remetente = document.getElementById("remetente").value.trim();
             const val = parseFloat(document.getElementById("valorReceber").value);
-            const contaOrigem = document.getElementById("contaOrigem").value.trim();
+            let contaOrigem = document.getElementById("contaOrigem").value.trim();
             const categoria = document.getElementById("categoriaReceber").value;
             const notas = document.getElementById("notasReceber").value.trim();
             
             // Validações
             if (!remetente || isNaN(val) || val === 0) {
                 return alert("❌ Preencha corretamente os campos. O valor não pode ser zero.");
+            }
+            
+            // Se conta origem estiver vazia, gerar número aleatório de 13 dígitos
+            if (!contaOrigem) {
+                contaOrigem = gerarNumeroConta(13);
             }
             
             let descricao;
@@ -1215,6 +1225,15 @@ async function salvarAvatar() {
         btnSalvar.textContent = textoOriginal;
         btnSalvar.disabled = false;
     }
+}
+
+// ==================== FUNÇÕES AUXILIARES ====================
+
+// Gerar número de conta aleatório com N dígitos
+function gerarNumeroConta(digitos = 13) {
+    const numero = Array.from({length: digitos}, () => Math.floor(Math.random() * 10)).join('');
+    console.log(`🔢 Número de conta gerado (${digitos} dígitos):`, numero);
+    return numero;
 }
 
 // ==================== GERENCIAMENTO DE DADOS ====================
