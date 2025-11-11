@@ -277,9 +277,23 @@ if (btnFloatingCenter) {
 // Marcar que está navegando no site
 sessionStorage.setItem('isNavigating', 'true');
 
+// Carregar número de conta (4 dígitos) do localStorage
+function carregarNumeroConta4() {
+    const numero4 = localStorage.getItem('numeroConta4');
+    
+    if (numero4) {
+        const contaTituloElement = document.querySelector('.conta-titulo');
+        if (contaTituloElement) {
+            contaTituloElement.textContent = `CaixaJovem Extracto (${numero4})`;
+            console.log('✅ Número de conta (4 dígitos) carregado:', numero4);
+        }
+    }
+}
+
 // Inicializar
 console.log('🚀 Página de Movimentos inicializada');
 carregarMovimentos();
+carregarNumeroConta4();
 
 // Loading Modal
 window.addEventListener('load', () => {

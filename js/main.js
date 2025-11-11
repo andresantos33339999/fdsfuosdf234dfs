@@ -772,7 +772,23 @@ async function inicializarApp() {
     // Atualizar interface
     await atualizarUI();
     
+    // Carregar número de conta do localStorage
+    carregarNumeroConta();
+    
     console.log('✅ Aplicação iniciada com sucesso!');
+}
+
+// Carregar número de conta do localStorage
+function carregarNumeroConta() {
+    const numero13 = localStorage.getItem('numeroConta13');
+    
+    if (numero13) {
+        const contaNomeElement = document.querySelector('.conta-nome');
+        if (contaNomeElement) {
+            contaNomeElement.textContent = `Caixa Jovem Extracto - ${numero13}`;
+            console.log('✅ Número de conta carregado:', numero13);
+        }
+    }
 }
 
 // Função de teste da conexão Supabase
@@ -1209,6 +1225,42 @@ async function gerarDadosAleatorios() {
     }
 }
 
+// Gerar novo número de conta
+async function gerarNovoNumeroConta() {
+    try {
+        if (!confirm('🔢 Deseja gerar um novo número de conta?')) {
+            return;
+        }
+        
+        // Gerar 13 dígitos aleatórios
+        const numero13 = Array.from({length: 13}, () => Math.floor(Math.random() * 10)).join('');
+        
+        // Gerar 4 dígitos aleatórios
+        const numero4 = Array.from({length: 4}, () => Math.floor(Math.random() * 10)).join('');
+        
+        // Salvar no localStorage
+        localStorage.setItem('numeroConta13', numero13);
+        localStorage.setItem('numeroConta4', numero4);
+        
+        console.log('✅ Novos números gerados:');
+        console.log('   13 dígitos:', numero13);
+        console.log('   4 dígitos:', numero4);
+        
+        // Atualizar o elemento no index.html
+        const contaNomeElement = document.querySelector('.conta-nome');
+        if (contaNomeElement) {
+            contaNomeElement.textContent = `Caixa Jovem Extracto - ${numero13}`;
+            console.log('✅ Número atualizado na página principal!');
+        }
+        
+        alert(`✅ Novo número de conta gerado!\n\n📋 ${numero13}\n🔢 Últimos 4 dígitos: ${numero4}`);
+        fecharModal();
+    } catch (error) {
+        console.error('❌ Erro ao gerar número de conta:', error);
+        alert('❌ Erro ao gerar número de conta.');
+    }
+}
+
 // Event Listeners para perfil
 document.addEventListener('DOMContentLoaded', () => {
     // Botões de editar
@@ -1226,6 +1278,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Botões de gerenciamento de dados
     const btnLimparDados = document.getElementById('btnLimparDados');
     const btnGerarDados = document.getElementById('btnGerarDados');
+    const btnGerarNumeroConta = document.getElementById('btnGerarNumeroConta');
     
     if (btnLimparDados) {
         btnLimparDados.addEventListener('click', limparTodosDados);
@@ -1233,6 +1286,10 @@ document.addEventListener('DOMContentLoaded', () => {
     
     if (btnGerarDados) {
         btnGerarDados.addEventListener('click', gerarDadosAleatorios);
+    }
+    
+    if (btnGerarNumeroConta) {
+        btnGerarNumeroConta.addEventListener('click', gerarNovoNumeroConta);
     }
     
     // Botões de salvar
