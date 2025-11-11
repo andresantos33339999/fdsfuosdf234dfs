@@ -241,7 +241,7 @@
           <button id="btnEditarAvatar" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">📷 Trocar Avatar</button>
           <button id="btnLimparDados" style="background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);">🗑️ Limpar Todos os Dados</button>
           <button id="btnGerarDados" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">🎲 Gerar Dados Novos</button>
-          <button id="btnGerarNumeroConta" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">🔢 Gerar Número de Conta</button>
+          <button id="btnEditarNumeroConta" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">🔢 Editar Número de Conta</button>
           <button onclick="fecharModal()">Fechar</button>
         </div>
       </div>
@@ -484,6 +484,25 @@
         <div class="botoes-perfil">
           <button class="btn-salvar" id="btnSalvarAvatar">💾 Salvar Avatar</button>
           <button class="btn-cancelar" onclick="fecharModalPerfil()">✖ Cancelar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Editar Número de Conta -->
+    <div class="modal" id="modalEditarNumeroConta">
+      <div class="box-perfil">
+        <h2>🔢 Editar Número de Conta</h2>
+        <p style="color: var(--muted); margin-bottom: 20px;">Digite os números da conta</p>
+        
+        <label>Número Completo (13 dígitos)</label>
+        <input type="text" id="inputNumero13" placeholder="0000000000000" maxlength="13" pattern="[0-9]*" />
+        
+        <label style="margin-top: 15px;">Últimos 4 Dígitos (para movimentos)</label>
+        <input type="text" id="inputNumero4" placeholder="0000" maxlength="4" pattern="[0-9]*" />
+        
+        <div class="botoes-perfil">
+          <button class="btn-salvar" id="btnSalvarNumeroConta">💾 Salvar</button>
+          <button class="btn-cancelar" onclick="fecharModalEditarNumero()">✖ Cancelar</button>
         </div>
       </div>
     </div>

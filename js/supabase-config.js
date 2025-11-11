@@ -271,6 +271,27 @@ async function atualizarAvatar(urlAvatar) {
   }
 }
 
+// Atualizar números de conta do perfil
+async function atualizarNumerosConta(numero13, numero4) {
+  try {
+    const { data, error } = await supabaseClient
+      .from("perfil")
+      .update({ 
+        numero_conta_13: numero13,
+        numero_conta_4: numero4
+      })
+      .eq("id", 1)
+      .select();
+
+    if (error) throw error;
+    console.log("✅Números de conta atualizados na base de dados:", numero13, numero4);
+    return data;
+  } catch (error) {
+    console.error("Erro ao atualizar números de conta:", error);
+    return null;
+  }
+}
+
 // Upload de imagem para Supabase Storage
 async function uploadAvatar(file) {
   try {
@@ -372,6 +393,82 @@ async function resetarSaldo() {
   } catch (error) {
     console.error("❌ Erro ao resetar saldo:", error);
     return false;
+  }
+}
+
+// Apagar transação e reverter saldo
+async function apagarTransacao(transacaoId, valorTransacao) {
+  try {
+    console.log("🗑️ Iniciando exclusão da transação...");
+    console.log("   ID:", transacaoId);
+    console.log("   Valor:", valorTransacao);
+
+    // 1. Buscar saldo atual usando a função buscarSaldo
+    console.log("💰 Buscando saldo atual...");
+    const saldoAtual = await buscarSaldo();
+    
+    if (saldoAtual === null || saldoAtual === undefined) {
+      throw new Error("Não foi possível buscar o saldo atual");
+    }
+    
+    console.log("💰 Saldo atual:", saldoAtual);
+
+    // 2. Calcular novo saldo (reverter o efeito da transação)
+    // Se foi débito (-50), adicionar 50 de volta
+    // Se foi crédito (+100), subtrair 100
+    const novoSaldo = parseFloat((saldoAtual - valorTransacao).toFixed(2));
+    console.log("💰 Novo saldo após reversão:", novoSaldo);
+
+    // 3. Deletar detalhes da transação primeiro (foreign key)
+    console.log("🗑️ Deletando detalhes da transação...");
+    const { error: errorDetalhes } = await supabaseClient
+      .from("detalhes_transacoes")
+      .delete()
+      .eq("transacao_id", transacaoId);
+
+    if (errorDetalhes) {
+      console.warn("⚠️ Erro ao deletar detalhes:", errorDetalhes);
+      console.warn("   Detalhes podem não existir, continuando...");
+    } else {
+      console.log("✅ Detalhes deletados!");
+    }
+
+    // 4. Deletar a transação
+    console.log("🗑️ Deletando transação...");
+    const { error: errorTransacao } = await supabaseClient
+      .from("transacoes")
+      .delete()
+      .eq("id", transacaoId);
+
+    if (errorTransacao) {
+      console.error("❌ Erro ao deletar transação:", errorTransacao);
+      throw errorTransacao;
+    }
+    console.log("✅ Transação deletada!");
+
+    // 5. Atualizar saldo usando a função atualizarSaldo
+    console.log("💰 Atualizando saldo para", novoSaldo, "...");
+    const resultadoSaldo = await atualizarSaldo(novoSaldo);
+    
+    if (!resultadoSaldo) {
+      console.error("❌ Erro ao atualizar saldo");
+      throw new Error("Falha ao atualizar o saldo");
+    }
+    console.log("✅ Saldo atualizado!");
+
+    console.log("\n✅ TRANSAÇÃO APAGADA COM SUCESSO!");
+    console.log("   • Saldo revertido de", saldoAtual, "para", novoSaldo);
+
+    return {
+      sucesso: true,
+      saldoAnterior: saldoAtual,
+      saldoNovo: novoSaldo,
+    };
+  } catch (error) {
+    console.error("❌ ERRO ao apagar transação:", error);
+    console.error("   Mensagem:", error.message);
+    console.error("   Stack:", error.stack);
+    return { sucesso: false, erro: error.message };
   }
 }
 
@@ -578,8 +675,10 @@ window.supabaseDB = {
   buscarPerfil,
   atualizarNome,
   atualizarAvatar,
+  atualizarNumerosConta,
   uploadAvatar,
   deletarTodasTransacoes,
   resetarSaldo,
+  apagarTransacao,
   gerarTransacoesAleatorias,
 };

@@ -185,11 +185,111 @@ function preencherDetalhesLocais(movimento) {
     document.getElementById('saldoDisponivel').textContent = `${saldoFormatado.valor} ${saldoFormatado.moeda}`;
 }
 
+// Apagar transação com confirmação dupla
+async function apagarTransacao() {
+    try {
+        // Buscar dados do movimento
+        const movimentoStr = localStorage.getItem('movimentoSelecionado');
+        if (!movimentoStr) {
+            alert('❌ Erro: Transação não encontrada.');
+            return;
+        }
+
+        const movimento = JSON.parse(movimentoStr);
+        const { id, descricao, valor } = movimento;
+
+        console.log('🗑️ Solicitação de exclusão:', { id, descricao, valor });
+
+        // Confirmação 1: Avisar sobre a ação
+        const confirmar1 = confirm(
+            `⚠️ ATENÇÃO!\n\n` +
+            `Você está prestes a APAGAR esta transação:\n\n` +
+            `📋 ${descricao}\n` +
+            `💰 ${valor > 0 ? '+' : ''}${valor.toFixed(2)} EUR\n\n` +
+            `O saldo será revertido automaticamente.\n\n` +
+            `Deseja continuar?`
+        );
+
+        if (!confirmar1) {
+            console.log('❌ Exclusão cancelada pelo usuário (1ª confirmação)');
+            return;
+        }
+
+        // Confirmação 2: Confirmar definitivamente
+        const confirmar2 = confirm(
+            `🚨 ÚLTIMA CONFIRMAÇÃO!\n\n` +
+            `Esta ação NÃO PODE SER DESFEITA!\n\n` +
+            `Tem CERTEZA que deseja apagar esta transação?\n\n` +
+            `Digite OK para confirmar.`
+        );
+
+        if (!confirmar2) {
+            console.log('❌ Exclusão cancelada pelo usuário (2ª confirmação)');
+            return;
+        }
+
+        // Verificar se o Supabase está disponível
+        const USAR_SUPABASE = true; // ou buscar da configuração
+        if (!USAR_SUPABASE || typeof window.supabaseDB === 'undefined') {
+            alert('❌ Erro: Sistema de banco de dados não disponível.');
+            console.error('❌ Supabase não está configurado');
+            return;
+        }
+
+        // Executar a exclusão
+        console.log('🗑️ Executando exclusão...');
+        const resultado = await window.supabaseDB.apagarTransacao(id, valor);
+
+        if (!resultado || !resultado.sucesso) {
+            throw new Error(resultado?.erro || 'Erro desconhecido ao apagar transação');
+        }
+
+        // Sucesso!
+        console.log('✅ Transação apagada com sucesso!');
+        console.log('   • Saldo anterior:', resultado.saldoAnterior);
+        console.log('   • Saldo novo:', resultado.saldoNovo);
+
+        // Limpar localStorage
+        localStorage.removeItem('movimentoSelecionado');
+
+        // Mostrar mensagem de sucesso
+        alert(
+            `✅ Transação apagada com sucesso!\n\n` +
+            `💰 Saldo revertido:\n` +
+            `   De: ${resultado.saldoAnterior.toFixed(2)} EUR\n` +
+            `   Para: ${resultado.saldoNovo.toFixed(2)} EUR\n\n` +
+            `Redirecionando para Movimentos...`
+        );
+
+        // Aguardar um momento e redirecionar
+        setTimeout(() => {
+            window.location.href = 'movimentos.html';
+        }, 500);
+
+    } catch (error) {
+        console.error('❌ ERRO ao apagar transação:', error);
+        alert(
+            `❌ Erro ao apagar transação!\n\n` +
+            `${error.message}\n\n` +
+            `Por favor, tente novamente ou contate o suporte.`
+        );
+    }
+}
+
 // Marcar que está navegando no site
 sessionStorage.setItem('isNavigating', 'true');
 
 // Inicializar ao carregar a página
-window.addEventListener('DOMContentLoaded', carregarDetalhes);
+window.addEventListener('DOMContentLoaded', () => {
+    carregarDetalhes();
+    
+    // Event listener para botão de apagar
+    const btnApagarTransacao = document.getElementById('btnApagarTransacao');
+    if (btnApagarTransacao) {
+        btnApagarTransacao.addEventListener('click', apagarTransacao);
+        console.log('✅ Botão de apagar transação conectado');
+    }
+});
 
 console.log('✅ Detalhes do movimento prontos');
 
