@@ -4,14 +4,28 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Caixa Geral de Depósitos — Conta Simulada (€)</title>
-    
+
     <!-- Favicons -->
-    <link rel="apple-touch-icon" sizes="180x180" href="images/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon/favicon-16x16.png">
-    <link rel="manifest" href="images/favicon/site.webmanifest">
-    <link rel="shortcut icon" href="images/favicon/favicon.ico">
-    
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="images/favicon/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="images/favicon/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="images/favicon/favicon-16x16.png"
+    />
+    <link rel="manifest" href="images/favicon/site.webmanifest" />
+    <link rel="shortcut icon" href="images/favicon/favicon.ico" />
+
     <link rel="stylesheet" href="css/style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -25,7 +39,12 @@
     <!-- Intro Screen -->
     <div class="intro-screen" id="introScreen">
       <div class="intro-content">
-        <img class="intro-video" id="introVideo" src="images/ScreenRecording_11-10-2025_22-32-31_1.gif" alt="Intro">
+        <img
+          class="intro-video"
+          id="introVideo"
+          src="images/ScreenRecording_11-10-2025_22-32-31_1.gif"
+          alt="Intro"
+        />
       </div>
     </div>
 
@@ -65,7 +84,9 @@
                     stroke-linecap="round"
                     stroke-linejoin="round"
                   >
-                    <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+                    <path
+                      d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"
+                    ></path>
                     <circle cx="12" cy="12" r="3"></circle>
                     <line x1="5" y1="19" x2="19" y2="5"></line>
                   </svg>
@@ -202,16 +223,23 @@
 
       <!-- Galeria de Fotos -->
       <div class="card">
-        
         <div class="galeria-container">
           <div class="galeria-item">
-            <img src="images/Photoroom_20251108_1213713.png" alt="Crédito Habitação Jovem" class="galeria-img" />
+            <img
+              src="images/Photoroom_20251108_1213713.png"
+              alt="Crédito Habitação Jovem"
+              class="galeria-img"
+            />
             <div class="galeria-overlay">
               <span class="galeria-text">Crédito Habitação Jovem</span>
             </div>
           </div>
           <div class="galeria-item">
-            <img src="images/Photoroom_20251108_2213852.png" alt="Combate à Fraude" class="galeria-img" />
+            <img
+              src="images/Photoroom_20251108_2213852.png"
+              alt="Combate à Fraude"
+              class="galeria-img"
+            />
             <div class="galeria-overlay">
               <span class="galeria-text">Combate à Fraude</span>
             </div>
@@ -237,23 +265,69 @@
         <div class="menu-opcoes">
           <button data-opcao="enviar">Enviar dinheiro</button>
           <button data-opcao="receber">Receber transferência</button>
-          <button id="btnEditarNome" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">✏️ Editar Nome</button>
-          <button id="btnEditarAvatar" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">📷 Trocar Avatar</button>
-          <button id="btnLimparDados" style="background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);">🗑️ Limpar Todos os Dados</button>
-          <button id="btnGerarDados" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">🎲 Gerar Dados Novos</button>
-          <button id="btnEditarNumeroConta" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">🔢 Editar Número de Conta</button>
+          <button
+            id="btnEditarNome"
+            style="
+              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            "
+          >
+            ✏️ Editar Nome
+          </button>
+          <button
+            id="btnEditarAvatar"
+            style="
+              background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            "
+          >
+            📷 Trocar Avatar
+          </button>
+          <button
+            id="btnLimparDados"
+            style="
+              background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+            "
+          >
+            🗑️ Limpar Todos os Dados
+          </button>
+          <button
+            id="btnGerarDados"
+            style="
+              background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            "
+          >
+            🎲 Gerar Dados Novos
+          </button>
+          <button
+            id="btnEditarNumeroConta"
+            style="
+              background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            "
+          >
+            🔢 Editar Número de Conta
+          </button>
           <button onclick="fecharModal()">Fechar</button>
         </div>
       </div>
 
       <div class="box form-envio" id="formEnvio" style="display: none">
         <h2>Enviar dinheiro</h2>
-        <label>Enviar para</label>
+
+        <label>Enviar para (Nome)</label>
         <input
           type="text"
           id="destinatario"
-          placeholder="Número ou nome da pessoa"
+          placeholder="Ex: João Silva"
+          required
         />
+
+        <label>Conta de Destino</label>
+        <input
+          type="text"
+          id="contaDestino"
+          placeholder="Ex: 9783185603043"
+          maxlength="50"
+        />
+
         <label>Valor (€)</label>
         <input
           type="number"
@@ -261,7 +335,52 @@
           step="0.01"
           min="0.01"
           placeholder="0.00"
+          required
         />
+
+        <label>Categoria</label>
+        <select
+          id="categoriaEnvio"
+          style="
+            width: 100%;
+            padding: 12px;
+            background: var(--bg-card);
+            border: 1px solid rgba(74, 144, 226, 0.3);
+            border-radius: 8px;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            margin-bottom: 16px;
+          "
+        >
+          <option value="Transferência">Transferência</option>
+          <option value="Pagamento">Pagamento</option>
+          <option value="Compras">Compras</option>
+          <option value="Alimentação">Alimentação</option>
+          <option value="Transporte">Transporte</option>
+          <option value="Saúde">Saúde</option>
+          <option value="Educação">Educação</option>
+          <option value="Lazer">Lazer</option>
+          <option value="Outros">Outros</option>
+        </select>
+
+        <label>Notas (opcional)</label>
+        <textarea
+          id="notasEnvio"
+          placeholder="Ex: Pagamento do jantar..."
+          rows="2"
+          style="
+            width: 100%;
+            padding: 12px;
+            background: var(--bg-card);
+            border: 1px solid rgba(74, 144, 226, 0.3);
+            border-radius: 8px;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            resize: vertical;
+            margin-bottom: 16px;
+          "
+        ></textarea>
+
         <div class="botoes">
           <button class="enviar" id="btnEnviarDinheiro">Enviar</button>
           <button class="recuar" onclick="voltarMenu()">Recuar</button>
@@ -270,14 +389,92 @@
 
       <div class="box form-envio" id="formReceber" style="display: none">
         <h2>Receber transferência</h2>
-        <label>Recebido de</label>
-        <input type="text" id="remetente" placeholder="Nome ou descrição" />
-        <label>Valor (€)</label>
-        <input type="number" id="valorReceber" step="0.01" placeholder="0.00" />
-        <small style="color: var(--muted); display: block; margin-top: 8px">
-          💡 Use valores positivos para receber ou negativos para simular
-          devoluções/estornos
+
+        <label>Recebido de (Nome)</label>
+        <input
+          type="text"
+          id="remetente"
+          placeholder="Ex: Maria Santos"
+          required
+        />
+
+        <label>Conta de Origem</label>
+        <input
+          type="text"
+          id="contaOrigem"
+          placeholder="Ex: PT50987654321098765432109"
+          maxlength="50"
+        />
+        <small
+          style="
+            color: var(--muted);
+            display: block;
+            margin-top: -8px;
+            margin-bottom: 12px;
+          "
+        >
+          💡 IBAN ou número da conta (opcional)
         </small>
+
+        <label>Valor (€)</label>
+        <input
+          type="number"
+          id="valorReceber"
+          step="0.01"
+          placeholder="0.00"
+          required
+        />
+        <small
+          style="
+            color: var(--muted);
+            display: block;
+            margin-top: -8px;
+            margin-bottom: 12px;
+          "
+        >
+          💡 Use valores positivos para receber ou negativos para estornos
+        </small>
+
+        <label>Categoria</label>
+        <select
+          id="categoriaReceber"
+          style="
+            width: 100%;
+            padding: 12px;
+            background: var(--bg-card);
+            border: 1px solid rgba(74, 144, 226, 0.3);
+            border-radius: 8px;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            margin-bottom: 16px;
+          "
+        >
+          <option value="Transferência">Transferência</option>
+          <option value="Salário">Salário</option>
+          <option value="Reembolso">Reembolso</option>
+          <option value="Venda">Venda</option>
+          <option value="Presente">Presente</option>
+          <option value="Outros">Outros</option>
+        </select>
+
+        <label>Notas (opcional)</label>
+        <textarea
+          id="notasReceber"
+          placeholder="Ex: Reembolso do almoço..."
+          rows="2"
+          style="
+            width: 100%;
+            padding: 12px;
+            background: var(--bg-card);
+            border: 1px solid rgba(74, 144, 226, 0.3);
+            border-radius: 8px;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            resize: vertical;
+            margin-bottom: 16px;
+          "
+        ></textarea>
+
         <div class="botoes">
           <button class="enviar" id="btnReceberDinheiro">Confirmar</button>
           <button class="recuar" onclick="voltarMenu()">Recuar</button>
@@ -452,12 +649,21 @@
     <div class="modal" id="modalEditarNome">
       <div class="box-perfil">
         <h2>✏️ Editar Nome</h2>
-        <p style="color: var(--muted); margin-bottom: 20px;">Digite o novo nome que aparecerá no topo da página</p>
+        <p style="color: var(--muted); margin-bottom: 20px">
+          Digite o novo nome que aparecerá no topo da página
+        </p>
         <label>Nome</label>
-        <input type="text" id="inputNovoNome" placeholder="Ex: João Silva" maxlength="50" />
+        <input
+          type="text"
+          id="inputNovoNome"
+          placeholder="Ex: João Silva"
+          maxlength="50"
+        />
         <div class="botoes-perfil">
           <button class="btn-salvar" id="btnSalvarNome">💾 Salvar</button>
-          <button class="btn-cancelar" onclick="fecharModalPerfil()">✖ Cancelar</button>
+          <button class="btn-cancelar" onclick="fecharModalPerfil()">
+            ✖ Cancelar
+          </button>
         </div>
       </div>
     </div>
@@ -466,24 +672,35 @@
     <div class="modal" id="modalEditarAvatar">
       <div class="box-perfil">
         <h2>📷 Trocar Avatar</h2>
-        <p style="color: var(--muted); margin-bottom: 20px;">Selecione uma imagem do seu computador</p>
-        
+        <p style="color: var(--muted); margin-bottom: 20px">
+          Selecione uma imagem do seu computador
+        </p>
+
         <div class="avatar-preview">
           <img id="avatarPreview" src="images/IMG_3008.JPG" alt="Preview" />
         </div>
-        
+
         <label class="btn-upload">
           📁 Escolher Imagem
-          <input type="file" id="inputAvatar" accept="image/*" style="display: none;" />
+          <input
+            type="file"
+            id="inputAvatar"
+            accept="image/*"
+            style="display: none"
+          />
         </label>
-        
-        <small style="color: var(--muted); display: block; margin-top: 12px;">
+
+        <small style="color: var(--muted); display: block; margin-top: 12px">
           Formatos aceitos: JPG, PNG, GIF (máx. 5MB)
         </small>
-        
+
         <div class="botoes-perfil">
-          <button class="btn-salvar" id="btnSalvarAvatar">💾 Salvar Avatar</button>
-          <button class="btn-cancelar" onclick="fecharModalPerfil()">✖ Cancelar</button>
+          <button class="btn-salvar" id="btnSalvarAvatar">
+            💾 Salvar Avatar
+          </button>
+          <button class="btn-cancelar" onclick="fecharModalPerfil()">
+            ✖ Cancelar
+          </button>
         </div>
       </div>
     </div>
@@ -492,17 +709,37 @@
     <div class="modal" id="modalEditarNumeroConta">
       <div class="box-perfil">
         <h2>🔢 Editar Número de Conta</h2>
-        <p style="color: var(--muted); margin-bottom: 20px;">Digite os números da conta</p>
-        
+        <p style="color: var(--muted); margin-bottom: 20px">
+          Digite os números da conta
+        </p>
+
         <label>Número Completo (13 dígitos)</label>
-        <input type="text" id="inputNumero13" placeholder="0000000000000" maxlength="13" pattern="[0-9]*" />
-        
-        <label style="margin-top: 15px;">Últimos 4 Dígitos (para movimentos)</label>
-        <input type="text" id="inputNumero4" placeholder="0000" maxlength="4" pattern="[0-9]*" />
-        
+        <input
+          type="text"
+          id="inputNumero13"
+          placeholder="0000000000000"
+          maxlength="13"
+          pattern="[0-9]*"
+        />
+
+        <label style="margin-top: 15px"
+          >Últimos 4 Dígitos (para movimentos)</label
+        >
+        <input
+          type="text"
+          id="inputNumero4"
+          placeholder="0000"
+          maxlength="4"
+          pattern="[0-9]*"
+        />
+
         <div class="botoes-perfil">
-          <button class="btn-salvar" id="btnSalvarNumeroConta">💾 Salvar</button>
-          <button class="btn-cancelar" onclick="fecharModalEditarNumero()">✖ Cancelar</button>
+          <button class="btn-salvar" id="btnSalvarNumeroConta">
+            💾 Salvar
+          </button>
+          <button class="btn-cancelar" onclick="fecharModalEditarNumero()">
+            ✖ Cancelar
+          </button>
         </div>
       </div>
     </div>

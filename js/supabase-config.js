@@ -179,6 +179,100 @@ async function adicionarTransacaoCompleta(descricao, valor, saldoAtual) {
   }
 }
 
+// Adicionar transação com detalhes personalizados
+async function adicionarTransacaoComDetalhes(transacaoData, detalhesData) {
+  try {
+    console.log("📝 Iniciando transação com detalhes personalizados...");
+    console.log("   Descrição:", transacaoData.descricao);
+    console.log("   Valor:", transacaoData.valor);
+    console.log("   Conta destino:", detalhesData.conta_destino);
+    console.log("   Categoria:", detalhesData.categoria);
+    
+    // Validações
+    if (!transacaoData.descricao || transacaoData.valor === undefined) {
+      throw new Error("Descrição e valor são obrigatórios");
+    }
+    
+    // PASSO 1: Adicionar transação principal
+    const { data: transacao, error: errorTransacao } = await supabaseClient
+      .from("transacoes")
+      .insert([
+        {
+          descricao: transacaoData.descricao,
+          valor: transacaoData.valor,
+          created_at: new Date().toISOString(),
+        },
+      ])
+      .select();
+
+    if (errorTransacao) {
+      console.error("❌ Erro ao criar transação:", errorTransacao);
+      throw errorTransacao;
+    }
+
+    const transacaoId = transacao[0].id;
+    console.log("✅ Transação principal criada com ID:", transacaoId);
+
+    // PASSO 2: Preparar detalhes personalizados usando os campos CORRETOS da tabela
+    const agora = new Date().toISOString();
+    const valorAbsoluto = Math.abs(transacaoData.valor);
+    const tipo = transacaoData.valor < 0 ? "Débito" : "Crédito";
+    
+    const detalhesCompletos = {
+      transacao_id: transacaoId,
+      montante_transacao: valorAbsoluto,
+      data_movimento: agora,
+      data_transacao: agora,
+      tipo: tipo,
+      operacao: detalhesData.tipo_operacao || "Caixa directa On-line",
+      conta_destino: detalhesData.conta_destino || null,
+      numero_transferencia: `${Math.floor(Math.random() * 1000000000)}`,
+      montante_transferencia: valorAbsoluto,
+      montante_original: valorAbsoluto,
+      saldo_contabilistico: transacaoData.saldoApos || 0,
+      saldo_disponivel_apos_movimento: transacaoData.saldoApos || 0,
+    };
+
+    console.log("📋 Detalhes a serem inseridos:", {
+      transacao_id: detalhesCompletos.transacao_id,
+      tipo: detalhesCompletos.tipo,
+      conta_destino: detalhesCompletos.conta_destino,
+      montante: detalhesCompletos.montante_transacao,
+      operacao: detalhesCompletos.operacao
+    });
+
+    // PASSO 3: Inserir detalhes
+    const { data: detalhesInseridos, error: errorDetalhes } = await supabaseClient
+      .from("detalhes_transacoes")
+      .insert([detalhesCompletos])
+      .select();
+
+    if (errorDetalhes) {
+      console.error("❌ ERRO ao inserir detalhes:");
+      console.error("   Código:", errorDetalhes.code);
+      console.error("   Mensagem:", errorDetalhes.message);
+      console.error("   Detalhes:", errorDetalhes.details);
+      console.error("   Hint:", errorDetalhes.hint);
+      throw errorDetalhes;
+    }
+
+    console.log("✅ Detalhes personalizados salvos com sucesso!");
+    console.log("   ID dos detalhes:", detalhesInseridos[0].id);
+    console.log("   Tipo:", detalhesCompletos.tipo);
+    console.log("   Conta destino:", detalhesCompletos.conta_destino);
+    console.log("   Operação:", detalhesCompletos.operacao);
+    console.log("   Saldo após:", detalhesCompletos.saldo_disponivel_apos_movimento);
+
+    return transacao[0];
+  } catch (error) {
+    console.error("❌ ERRO CRÍTICO ao adicionar transação com detalhes:");
+    console.error("   Tipo:", error.constructor.name);
+    console.error("   Mensagem:", error.message);
+    console.error("   Stack:", error.stack);
+    throw error; // Re-lançar o erro para que seja capturado pelo chamador
+  }
+}
+
 // Buscar detalhes de uma transação
 async function buscarDetalhesTransacao(transacaoId) {
   try {
@@ -669,6 +763,7 @@ window.supabaseDB = {
   buscarTransacoes,
   adicionarTransacao,
   adicionarTransacaoCompleta,
+  adicionarTransacaoComDetalhes,
   buscarDetalhesTransacao,
   buscarSaldo,
   atualizarSaldo,

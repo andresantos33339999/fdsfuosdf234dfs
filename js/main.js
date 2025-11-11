@@ -333,13 +333,17 @@ function atualizarSaldoUI() {
         document.getElementById("btnEnviarDinheiro").addEventListener("click", async () => {
             const dest = document.getElementById("destinatario").value.trim();
             const val = parseFloat(document.getElementById("valorEnvio").value);
+            const contaDestino = document.getElementById("contaDestino").value.trim();
+            const categoria = document.getElementById("categoriaEnvio").value;
+            const notas = document.getElementById("notasEnvio").value.trim();
             
+            // Validações
             if (!dest || isNaN(val) || val <= 0) {
-                return alert("Preencha corretamente os campos.");
+                return alert("❌ Preencha corretamente os campos obrigatórios (Nome e Valor).");
             }
             
             if (val > saldo) {
-                return alert("Saldo insuficiente.");
+                return alert("❌ Saldo insuficiente.");
             }
             
             const descricao = ` ${dest}`;
@@ -349,18 +353,44 @@ function atualizarSaldoUI() {
                 try {
                     console.log('💸 ENVIAR DINHEIRO MB WAY - Iniciando...');
                     console.log(`   Destinatário: ${dest}`);
+                    console.log(`   Conta Destino: ${contaDestino || 'Não especificada'}`);
+                    console.log(`   Categoria: ${categoria}`);
                     console.log(`   Valor: -${val}€`);
                     console.log(`   Saldo ANTES: ${saldo}€`);
                     
                     // PASSO 1: Calcular novo saldo
-                    const novoSaldo = saldo - val;
+                    const novoSaldo = parseFloat((saldo - val).toFixed(2));
                     
-                    // PASSO 2: Adicionar transação completa com detalhes
-                    console.log('📝 Salvando transação completa com detalhes...');
-                    await window.supabaseDB.adicionarTransacaoCompleta(descricao, -val, novoSaldo);
-                    console.log('✅ Transação e detalhes salvos!');
+                    // PASSO 2: Preparar dados da transação
+                    const transacaoData = {
+                        descricao: descricao,
+                        valor: -val,
+                        saldoApos: novoSaldo
+                    };
                     
-                    // PASSO 3: Atualizar saldo no banco
+                    // PASSO 3: Preparar detalhes personalizados
+                    const detalhesData = {
+                        conta_destino: contaDestino || dest,
+                        tipo_operacao: categoria || 'Pagamento', // Usar categoria como tipo de operação
+                    };
+                    
+                    // PASSO 4: Adicionar transação com detalhes personalizados
+                    console.log('📝 Salvando transação com detalhes personalizados...');
+                    let resultado;
+                    try {
+                        resultado = await window.supabaseDB.adicionarTransacaoComDetalhes(transacaoData, detalhesData);
+                    } catch (errorDetalhes) {
+                        console.error('❌ ERRO ao salvar transação com detalhes:', errorDetalhes);
+                        throw new Error(`Erro ao salvar detalhes: ${errorDetalhes.message}`);
+                    }
+                    
+                    if (!resultado) {
+                        throw new Error('Falha ao salvar transação - resultado nulo');
+                    }
+                    console.log('✅ Transação e detalhes salvos com sucesso!');
+                    console.log('   ID da transação:', resultado.id);
+                    
+                    // PASSO 5: Atualizar saldo no banco
                     console.log(`💳 Atualizando saldo: ${saldo}€ - ${val}€ = ${novoSaldo}€`);
                     await window.supabaseDB.atualizarSaldo(novoSaldo);
                     console.log('✅ Saldo atualizado!');
@@ -368,7 +398,8 @@ function atualizarSaldoUI() {
                     console.log('✅ ENVIO CONCLUÍDO COM SUCESSO!');
                 } catch (error) {
                     console.error('❌ ERRO ao enviar dinheiro:', error);
-                    alert('⚠️ Erro ao salvar no banco de dados. Tente novamente.');
+                    console.error('   Stack:', error.stack);
+                    alert(`⚠️ Erro ao salvar no banco de dados:\n\n${error.message}\n\nVeja o console (F12) para mais detalhes.`);
                     return;
                 }
             } else {
@@ -377,21 +408,28 @@ function atualizarSaldoUI() {
             }
             
             await atualizarUI();
-            alert(`💸 Dinheiro enviado com sucesso para ${dest} no valor de ${fmt(val).completo}.`);
+            alert(`💸 Dinheiro enviado com sucesso para ${dest} no valor de ${fmt(val).completo}!`);
             fecharModal();
             
             // Limpar campos
             document.getElementById("destinatario").value = '';
+            document.getElementById("contaDestino").value = '';
             document.getElementById("valorEnvio").value = '';
+            document.getElementById("categoriaEnvio").value = 'Transferência';
+            document.getElementById("notasEnvio").value = '';
         });
 
         // Função para receber transferência
         document.getElementById("btnReceberDinheiro").addEventListener("click", async () => {
             const remetente = document.getElementById("remetente").value.trim();
             const val = parseFloat(document.getElementById("valorReceber").value);
+            const contaOrigem = document.getElementById("contaOrigem").value.trim();
+            const categoria = document.getElementById("categoriaReceber").value;
+            const notas = document.getElementById("notasReceber").value.trim();
             
+            // Validações
             if (!remetente || isNaN(val) || val === 0) {
-                return alert("Preencha corretamente os campos. O valor não pode ser zero.");
+                return alert("❌ Preencha corretamente os campos. O valor não pode ser zero.");
             }
             
             let descricao;
@@ -399,10 +437,10 @@ function atualizarSaldoUI() {
             
             if (val > 0) {
                 descricao = `${remetente}`;
-                tipoTransacao = "recebida";
+                tipoTransacao = "Transferência";
             } else {
                 descricao = `${remetente}`;
-                tipoTransacao = "estorno";
+                tipoTransacao = "Estorno";
             }
             
             // Salvar no Supabase se estiver ativo
@@ -410,18 +448,44 @@ function atualizarSaldoUI() {
                 try {
                     console.log('💰 RECEBER TRANSFERÊNCIA - Iniciando...');
                     console.log(`   Remetente: ${remetente}`);
+                    console.log(`   Conta Origem: ${contaOrigem || 'Não especificada'}`);
+                    console.log(`   Categoria: ${categoria}`);
                     console.log(`   Valor: ${val}€`);
                     console.log(`   Saldo ANTES: ${saldo}€`);
                     
                     // PASSO 1: Calcular novo saldo
-                    const novoSaldo = saldo + val;
+                    const novoSaldo = parseFloat((saldo + val).toFixed(2));
                     
-                    // PASSO 2: Adicionar transação completa com detalhes
-                    console.log('📝 Salvando transação completa com detalhes...');
-                    await window.supabaseDB.adicionarTransacaoCompleta(descricao, val, novoSaldo);
-                    console.log('✅ Transação e detalhes salvos!');
+                    // PASSO 2: Preparar dados da transação
+                    const transacaoData = {
+                        descricao: descricao,
+                        valor: val,
+                        saldoApos: novoSaldo
+                    };
                     
-                    // PASSO 3: Atualizar saldo no banco
+                    // PASSO 3: Preparar detalhes personalizados
+                    const detalhesData = {
+                        conta_destino: contaOrigem || remetente,
+                        tipo_operacao: categoria || tipoTransacao, // Usar categoria como tipo de operação
+                    };
+                    
+                    // PASSO 4: Adicionar transação com detalhes personalizados
+                    console.log('📝 Salvando transação com detalhes personalizados...');
+                    let resultado;
+                    try {
+                        resultado = await window.supabaseDB.adicionarTransacaoComDetalhes(transacaoData, detalhesData);
+                    } catch (errorDetalhes) {
+                        console.error('❌ ERRO ao salvar transação com detalhes:', errorDetalhes);
+                        throw new Error(`Erro ao salvar detalhes: ${errorDetalhes.message}`);
+                    }
+                    
+                    if (!resultado) {
+                        throw new Error('Falha ao salvar transação - resultado nulo');
+                    }
+                    console.log('✅ Transação e detalhes salvos com sucesso!');
+                    console.log('   ID da transação:', resultado.id);
+                    
+                    // PASSO 5: Atualizar saldo no banco
                     console.log(`💳 Atualizando saldo: ${saldo}€ + ${val}€ = ${novoSaldo}€`);
                     await window.supabaseDB.atualizarSaldo(novoSaldo);
                     console.log('✅ Saldo atualizado na base de dados!');
@@ -429,7 +493,8 @@ function atualizarSaldoUI() {
                     console.log('✅ TRANSFERÊNCIA RECEBIDA COM SUCESSO!');
                 } catch (error) {
                     console.error('❌ ERRO ao receber transferência:', error);
-                    alert('⚠️ Erro ao salvar no banco de dados. Tente novamente.');
+                    console.error('   Stack:', error.stack);
+                    alert(`⚠️ Erro ao salvar no banco de dados:\n\n${error.message}\n\nVeja o console (F12) para mais detalhes.`);
                     return;
                 }
             } else {
@@ -450,7 +515,10 @@ function atualizarSaldoUI() {
             
             // Limpar campos
             document.getElementById("remetente").value = '';
+            document.getElementById("contaOrigem").value = '';
             document.getElementById("valorReceber").value = '';
+            document.getElementById("categoriaReceber").value = 'Transferência';
+            document.getElementById("notasReceber").value = '';
         });
 
         // ========================================
