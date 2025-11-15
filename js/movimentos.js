@@ -47,6 +47,30 @@ const fmtHora = (dataStr) => {
     });
 };
 
+const fmtSaldoApos = (valor) => {
+    if (valor === undefined || valor === null || isNaN(valor)) {
+        return null;
+    }
+    return `${Number(valor).toFixed(2).replace('.', ',')} EUR`;
+};
+
+const extrairSaldoApos = (registro) => {
+    if (registro === null || registro === undefined) return null;
+    if (registro.saldo_apos_movimento !== undefined && registro.saldo_apos_movimento !== null) {
+        return parseFloat(registro.saldo_apos_movimento);
+    }
+
+    const detalhes = Array.isArray(registro.detalhes_transacoes)
+        ? registro.detalhes_transacoes[0]
+        : registro.detalhes_transacoes;
+
+    if (detalhes && detalhes.saldo_contabilistico !== undefined && detalhes.saldo_contabilistico !== null) {
+        return parseFloat(detalhes.saldo_contabilistico);
+    }
+
+    return null;
+};
+
 // Função para obter ícone baseado na descrição
 function obterIcone(descricao) {
     // Retorna sempre o mesmo ícone personalizado
@@ -86,7 +110,8 @@ async function carregarMovimentos() {
                         id: t.id,
                         descricao: t.descricao,
                         valor: parseFloat(t.valor),
-                        data: t.created_at
+                        data: t.created_at,
+                        saldoApos: extrairSaldoApos(t)
                     }))
                     .sort((a, b) => new Date(b.data) - new Date(a.data));
                 
@@ -154,10 +179,11 @@ function renderizarMovimentos() {
     const movimentosComSaldo = [...movimentos]
         .reverse()
         .map(m => {
-            saldoAcumulado += m.valor;
+            const saldoCalculado = saldoAcumulado + m.valor;
+            saldoAcumulado = saldoCalculado;
             return {
                 ...m,
-                saldoApos: saldoAcumulado
+                saldoApos: m.saldoApos ?? saldoCalculado
             };
         })
         .reverse(); // Voltar para mais recente primeiro

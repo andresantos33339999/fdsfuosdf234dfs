@@ -16,7 +16,7 @@ async function buscarTransacoes() {
   try {
     const { data, error } = await supabaseClient
       .from("transacoes")
-      .select("*")
+      .select("*, detalhes_transacoes(saldo_contabilistico)")
       .order("created_at", { ascending: false });
 
     if (error) throw error;
@@ -28,7 +28,7 @@ async function buscarTransacoes() {
 }
 
 // Adicionar nova transação
-async function adicionarTransacao(descricao, valor) {
+async function adicionarTransacao(descricao, valor, saldoAposMovimento = null) {
   try {
     const { data, error } = await supabaseClient
       .from("transacoes")
@@ -36,6 +36,7 @@ async function adicionarTransacao(descricao, valor) {
         {
           descricao: descricao,
           valor: valor,
+          saldo_apos_movimento: saldoAposMovimento,
           created_at: new Date().toISOString(),
         },
       ])
@@ -200,6 +201,7 @@ async function adicionarTransacaoComDetalhes(transacaoData, detalhesData) {
         {
           descricao: transacaoData.descricao,
           valor: transacaoData.valor,
+          saldo_apos_movimento: transacaoData.saldoApos ?? null,
           created_at: new Date().toISOString(),
         },
       ])

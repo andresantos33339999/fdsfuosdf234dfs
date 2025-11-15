@@ -20,6 +20,30 @@ const fmt = v => {
     };
 };
 
+const fmtSaldoApos = (valor) => {
+    if (valor === undefined || valor === null || isNaN(valor)) {
+        return null;
+    }
+    return `${Number(valor).toFixed(2).replace('.', ',')} EUR`;
+};
+
+const extrairSaldoApos = (registro) => {
+    if (registro === null || registro === undefined) return null;
+    if (registro.saldo_apos_movimento !== undefined && registro.saldo_apos_movimento !== null) {
+        return parseFloat(registro.saldo_apos_movimento);
+    }
+
+    const detalhes = Array.isArray(registro.detalhes_transacoes)
+        ? registro.detalhes_transacoes[0]
+        : registro.detalhes_transacoes;
+
+    if (detalhes && detalhes.saldo_contabilistico !== undefined && detalhes.saldo_contabilistico !== null) {
+        return parseFloat(detalhes.saldo_contabilistico);
+    }
+
+    return null;
+};
+
 // Formatador de data
 const fmtData = (dataStr) => {
     if (!dataStr) return '';
@@ -195,7 +219,8 @@ async function atualizarUI() {
                     id: t.id,
                     desc: t.descricao,
                     valor: parseFloat(t.valor),
-                    data: t.created_at
+                    data: t.created_at,
+                    saldoApos: extrairSaldoApos(t)
                 }));
                 
                 // Ordenar por data decrescente (mais recentes primeiro)
@@ -279,7 +304,8 @@ function atualizarSaldoUI() {
                         id: tx.id,
                         descricao: tx.desc,
                         valor: tx.valor,
-                        data: tx.data
+                        data: tx.data,
+                        saldoApos: tx.saldoApos ?? null
                     };
                     
                     // Salvar no localStorage
